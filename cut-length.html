@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC</title>
 <meta name="description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
-<link rel="canonical" href="https://haikan-calc.netlify.app/cut-length.html">
+<link rel="canonical" href="https://yuuki12100515-bot.github.io/haikan-calc/cut-length.html">
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#17202a;--sub:#66707a;--blue:#1677ff;--green:#08783e}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
@@ -22,14 +22,14 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 @media(max-width:620px){.grid{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.tabs button{font-size:16px;padding:12px 8px}h1{font-size:28px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"芯々から切り寸","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true,"url":"https://haikan-calc.netlify.app/cut-length.html","description":"BW・SW・ねじ込み・塩ビの主要継手に対応した配管切り寸計算。"}
+{"@context":"https://schema.org","@type":"WebApplication","name":"芯々から切り寸","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true,"url":"https://yuuki12100515-bot.github.io/haikan-calc/cut-length.html","description":"BW・SW・ねじ込み・塩ビの主要継手に対応した配管切り寸計算。"}
 </script>
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HAIKAN CALC">
 <meta property="og:title" content="芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC">
 <meta property="og:description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
-<meta property="og:url" content="https://haikan-calc.netlify.app/cut-length.html">
+<meta property="og:url" content="https://yuuki12100515-bot.github.io/haikan-calc/cut-length.html">
 <meta name="twitter:card" content="summary">
 
 
@@ -40,8 +40,8 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
     {
       "@type":"BreadcrumbList",
       "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"HAIKAN CALC","item":"https://haikan-calc.netlify.app/"},
-        {"@type":"ListItem","position":2,"name":"芯々から切り寸","item":"https://haikan-calc.netlify.app/cut-length.html"}
+        {"@type":"ListItem","position":1,"name":"HAIKAN CALC","item":"https://yuuki12100515-bot.github.io/haikan-calc/"},
+        {"@type":"ListItem","position":2,"name":"芯々から切り寸","item":"https://yuuki12100515-bot.github.io/haikan-calc/cut-length.html"}
       ]
     },
     {
@@ -56,7 +56,7 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 <body>
 
 <nav class="hc-mini-nav" aria-label="HAIKAN CALC">
-  <a href="index.html">トップ</a>
+  <a href="index.html">計算機一覧</a>
   <a href="cut-length.html">切り寸</a>
   <a href="cut-el.html">カットEL</a>
   <a href="offset.html">逃げ</a>
@@ -71,7 +71,7 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 
 <header><div class="wrap"><h1>芯々から切り寸</h1><p>BW・SW・ねじ・塩ビ。よく使う継手は自動、特殊品は手入力で対応。</p></div></header>
 <main class="wrap">
-<p><a href="index.html">← HAIKAN CALC トップ</a></p>
+<p><a href="index.html">← 計算機一覧へ戻る</a></p>
 
 <section class="card">
 <h2>① 配管方式</h2>
@@ -158,6 +158,7 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 <script>
 (()=>{const $=id=>document.getElementById(id);let method='bw';
 const sizeSets={bw:[15,20,25,32,40,50,65,80,100,125,150],sw:[15,20,25,32,40,50,65,80],thread:[15,20,25,32,40,50,65,80,100,125,150],pvc:[13,16,20,25,30,40,50,65,75,100,125,150]};
+const inchLabels={15:'1/2″',20:'3/4″',25:'1″',32:'1-1/4″',40:'1-1/2″',50:'2″',65:'2-1/2″',80:'3″',90:'3-1/2″',100:'4″',125:'5″',150:'6″'};
 const lists={bw:[['90LR','90°EL LR'],['90SR','90°EL SR'],['45LR','45°EL LR'],['TEE','同径TEE'],['CUSTOM','その他・手入力']],sw:[['90EL','90°EL'],['45EL','45°EL'],['TEE','同径TEE'],['CROSS','クロス'],['CUSTOM','その他・手入力']],thread:[['90EL','90°EL'],['45EL','45°EL'],['TEE','同径TEE'],['CROSS','クロス'],['CUSTOM','その他・手入力']],pvc:[['90EL','90°エルボ'],['TEE','チーズ / 90°Y'],['CUSTOM','その他・手入力']]};
 
 const bwEl={50:{'90LR':76.2,'90SR':50.8,'45LR':31.6},65:{'90LR':95.3,'90SR':63.5,'45LR':39.5},80:{'90LR':114.3,'90SR':76.2,'45LR':47.3},100:{'90LR':152.4,'90SR':101.6,'45LR':63.1},125:{'90LR':190.5,'90SR':127,'45LR':78.9},150:{'90LR':228.6,'90SR':152.4,'45LR':94.7}};
@@ -177,7 +178,7 @@ const dvY={'50x40':[27,33,27],'65x50':[34,42,35],'75x50':[34,48,35],'75x65':[42,
 const notes={bw:'BW：90°/45°エルボと同径TEEを自動入力。',sw:'SW：差込み深さを含めて実効控除を自動計算。',thread:'ねじ込み：代表継手のZ寸法を自動入力。',pvc:'塩ビ：TS / HI-TS / DV / VU-DV / HT の主要エルボ・チーズ/Yに対応。'};
 
 function pvcArr(){let sys=$('pvcSystem').value;if(sys==='DV')return [30,40,50,65,75,100,125,150];if(sys==='VUDV')return [40,50,65,75,100,125,150];return sizeSets.pvc}
-function setSizes(){let s=$('size'),arr=method==='pvc'?pvcArr():sizeSets[method],old=+s.value;s.innerHTML='';arr.forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v+'A';s.appendChild(o)});s.value=arr.includes(old)?old:arr[0]}
+function setSizes(){let s=$('size'),arr=method==='pvc'?pvcArr():sizeSets[method],old=+s.value;s.innerHTML='';arr.forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=method==='pvc'?v+'A':v+'A（'+inchLabels[v]+'）';s.appendChild(o)});s.value=arr.includes(old)?old:arr[0]}
 function setTypes(side){let s=$(side+'Type');s.innerHTML='';lists[method].forEach(([v,t])=>{let o=document.createElement('option');o.value=v;o.textContent=t;s.appendChild(o)});s.value=method==='bw'?'90LR':'90EL'}
 function teeTable(){let sys=$('pvcSystem').value;return (sys==='TS'||sys==='HITS')?tsT:sys==='HT'?htT:sys==='VUDV'?vuY:sys==='DV'?dvY:null}
 function setBranches(side){let main=+$('size').value,tbl=teeTable(),sel=$(side+'Branch');sel.innerHTML='';if(tbl){Object.keys(tbl).filter(k=>+k.split('x')[0]===main).map(k=>+k.split('x')[1]).sort((a,b)=>b-a).forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v+'A';sel.appendChild(o)})}if(!sel.options.length){let o=document.createElement('option');o.value=main;o.textContent=main+'A';sel.appendChild(o)}}

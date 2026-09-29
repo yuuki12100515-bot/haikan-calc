@@ -1,9 +1,9 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>配管の逃げ寸法（オフセット）計算｜45°・任意角｜HAIKAN CALC</title><meta name="description" content="配管の逃げ寸法（オフセット）を無料計算。逃げ量と角度から芯々実長、進み、直管切り寸を求めます。"><style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#17202a}.w{max-width:620px;margin:auto}.c{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px #0001}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-weight:700;font-size:14px}input,select,button{width:100%;box-sizing:border-box;font-size:18px;padding:14px;border-radius:12px;border:1px solid #ccd1d5;margin-top:6px}button{background:#1677ff;color:white;border:0;font-weight:800;margin-top:18px}.r{margin-top:16px;background:#eef5ff;padding:16px;border-radius:14px;line-height:1.9}.hero{font-size:24px}.n{font-size:13px;color:#586069;margin-top:12px}@media(max-width:480px){.g{grid-template-columns:1fr}}</style><link rel="canonical" href="https://haikan-calc.netlify.app/offset.html">
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>配管の逃げ寸法（オフセット）計算｜45°・任意角｜HAIKAN CALC</title><meta name="description" content="配管の逃げ寸法（オフセット）を無料計算。逃げ量と角度から芯々実長、進み、直管切り寸を求めます。"><style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#17202a}.w{max-width:620px;margin:auto}.c{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px #0001}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-weight:700;font-size:14px}input,select,button{width:100%;box-sizing:border-box;font-size:18px;padding:14px;border-radius:12px;border:1px solid #ccd1d5;margin-top:6px}button{background:#1677ff;color:white;border:0;font-weight:800;margin-top:18px}.r{margin-top:16px;background:#eef5ff;padding:16px;border-radius:14px;line-height:1.9}.hero{font-size:24px}.n{font-size:13px;color:#586069;margin-top:12px}@media(max-width:480px){.g{grid-template-columns:1fr}}</style><link rel="canonical" href="https://yuuki12100515-bot.github.io/haikan-calc/offset.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HAIKAN CALC">
 <meta property="og:title" content="配管の逃げ寸法（オフセット）計算｜45°・任意角｜HAIKAN CALC">
 <meta property="og:description" content="配管の逃げ寸法（オフセット）を無料計算。逃げ量と角度から芯々実長、進み、直管切り寸を求めます。">
-<meta property="og:url" content="https://haikan-calc.netlify.app/offset.html">
+<meta property="og:url" content="https://yuuki12100515-bot.github.io/haikan-calc/offset.html">
 <meta name="twitter:card" content="summary">
 
 
@@ -14,8 +14,8 @@
     {
       "@type":"BreadcrumbList",
       "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"HAIKAN CALC","item":"https://haikan-calc.netlify.app/"},
-        {"@type":"ListItem","position":2,"name":"配管の逃げ寸法（オフセット）","item":"https://haikan-calc.netlify.app/offset.html"}
+        {"@type":"ListItem","position":1,"name":"HAIKAN CALC","item":"https://yuuki12100515-bot.github.io/haikan-calc/"},
+        {"@type":"ListItem","position":2,"name":"配管の逃げ寸法（オフセット）","item":"https://yuuki12100515-bot.github.io/haikan-calc/offset.html"}
       ]
     },
     {
@@ -29,7 +29,7 @@
 </head><body>
 
 <nav class="hc-mini-nav" aria-label="HAIKAN CALC">
-  <a href="index.html">トップ</a>
+  <a href="index.html">計算機一覧</a>
   <a href="cut-length.html">切り寸</a>
   <a href="cut-el.html">カットEL</a>
   <a href="offset.html">逃げ</a>
@@ -42,7 +42,7 @@
 .hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
 </style>
 <div style="max-width:640px;margin:0 auto 12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
-<a href="index.html" style="text-decoration:none;font-weight:800;color:#1677ff">← HAIKAN CALC トップ</a>
+<a href="index.html" style="text-decoration:none;font-weight:800;color:#1677ff">← 計算機一覧へ戻る</a>
 </div><div class="w"><div class="c"><h1>配管オフセット計算</h1><p>11.25°・22.5°・30°・45°・60°・任意角度。オフセットから芯芯実長・進み・最終切り寸まで。</p><div class="g"><label>オフセット (mm)<input id="off" type="number" value="500" step="any"></label><label>角度<select id="ang"><option>11.25</option><option>22.5</option><option>30</option><option selected>45</option><option>60</option><option value="custom">任意角度</option></select></label><label id="customWrap" style="display:none">任意角度 (°)<input id="customAng" type="number" value="15" min="0.1" max="89.9" step="any"></label><label>引き寸① (mm)<input id="t1" type="number" value="0" step="any"></label><label>引き寸② (mm)<input id="t2" type="number" value="0" step="any"></label><label>追加控除 (mm)<input id="extra" type="number" value="0" step="any"></label></div><button id="go">計算する</button><div id="out" class="r">条件を入力してください</div><div class="n">芯芯実長 = オフセット ÷ sin(角度)。進み = オフセット ÷ tan(角度)。切り寸は芯芯実長から両端引き寸と追加控除を差し引きます。</div></div></div><script>(function(){const q=x=>document.getElementById(x);q('ang').addEventListener('change',function(){q('customWrap').style.display=this.value==='custom'?'block':'none'});
 q('go').addEventListener('click',function(){let O=Number(q('off').value),A=q('ang').value==='custom'?Number(q('customAng').value):Number(q('ang').value),T1=Number(q('t1').value),T2=Number(q('t2').value),E=Number(q('extra').value);if(![O,A,T1,T2,E].every(Number.isFinite)||O<=0||A<=0||A>=90||T1<0||T2<0||E<0){q('out').textContent='入力値を確認してください';return}let r=A*Math.PI/180,m=1/Math.sin(r),rm=1/Math.tan(r),travel=O*m,run=O*rm,cut=travel-T1-T2-E;if(cut<0){q('out').textContent='控除寸法が芯芯実長を超えています';return}q('out').innerHTML='<span class="hero">芯芯実長 <b>'+travel.toFixed(1)+' mm</b></span><br>進み <b>'+run.toFixed(1)+' mm</b><br>Travel倍率 <b>'+m.toFixed(4)+'</b><br>Run倍率 '+rm.toFixed(4)+'<br>切り寸 <b>'+cut.toFixed(1)+' mm</b><br><small>'+travel.toFixed(1)+' − '+T1.toFixed(1)+' − '+T2.toFixed(1)+' − '+E.toFixed(1)+' = '+cut.toFixed(1)+'</small>';});})();</script><div style="max-width:640px;margin:16px auto;padding:14px;border:1px dashed #c7cdd5;border-radius:14px;text-align:center;color:#7a838d;font:14px -apple-system,BlinkMacSystemFont,sans-serif">広告スペース（正式広告導入予定）</div><section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7"><h2 style="font-size:19px">使い方と確認ポイント</h2><p>現場寸法を入力して計算し、表示された単位と計算条件を確認してください。製作・施工に使用する場合は、図面、適用規格、メーカー寸法、現場条件を優先して最終確認してください。</p><p>HAIKAN CALCでは、結果だけでなく途中の寸法や倍率も表示し、現場で検算しやすい計算ツールを目指しています。</p></section><div style="max-width:640px;margin:16px auto;background:#fff;padding:16px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif"><b>関連する現場計算</b><br><a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="rolling-offset.html">3方向の振り・逃げ（ローリングオフセット）</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="slope.html">配管勾配・高低差</a> ｜ <a href="sgp-weight.html">SGP重量・保有水量</a></div>
 <section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">

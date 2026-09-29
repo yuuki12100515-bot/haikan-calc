@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://haikan-calc.netlify.app/sitemap.xml
+Sitemap: https://yuuki12100515-bot.github.io/haikan-calc/sitemap.xml

@@ -1,3 +1,75 @@
-<!DOCTYPE html>
-
-<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>レジューサ形状・偏芯量計算｜HAIKAN CALC</title><meta content="A/B呼び径を選ぶだけで外径を自動入力。大径・小径・長さから偏芯量とレジューサ角度を計算。" name="description"/><style>body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;margin:0;background:#f4f6f8;color:#17202a}header{background:#17202a;color:#fff;padding:20px}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:#fff;border-radius:16px;padding:18px;margin:14px 0}label{display:block;font-weight:800;font-size:14px;margin:10px 0}input,select,button{box-sizing:border-box;width:100%;font-size:18px;padding:13px;border-radius:11px;border:1px solid #ccd2d8;margin-top:5px}button{background:#1677ff;color:white;border:0;font-weight:900}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.res{background:#eef5ff;padding:15px;border-radius:12px;line-height:1.8;margin-top:14px}.note{font-size:13px;color:#65707a;line-height:1.7}a{color:#1677ff}@media(max-width:620px){.grid{grid-template-columns:1fr}}</style><link href="https://haikan-calc.netlify.app/reducer-geometry.html" rel="canonical"/></head><body><nav style="padding:10px 16px;background:#fff;border-bottom:1px solid #e5e7eb;font-size:14px"><a href="index.html" style="margin-right:14px">トップ</a><a href="cut-length.html" style="margin-right:14px">切り寸</a><a href="cut-el.html" style="margin-right:14px">カットEL</a><a href="offset.html" style="margin-right:14px">逃げ</a><a href="flow-velocity.html" style="margin-right:14px">流量</a></nav><header><div class="wrap"><b style="font-size:25px">レジューサ形状計算</b><div>径差・偏芯量・テーパー角度を確認</div></div></header><main class="wrap"><section class="card"><h1>レジューサ形状計算</h1><div class="grid"><label>大径側 呼び径<select id="n1"><option value="60.5">50A (2B)</option><option value="76.3">65A (2½B)</option><option value="89.1">80A (3B)</option><option selected="" value="114.3">100A (4B)</option><option value="139.8">125A (5B)</option><option value="165.2">150A (6B)</option><option value="216.3">200A (8B)</option><option value="267.4">250A (10B)</option><option value="318.5">300A (12B)</option><option value="custom">実寸入力</option></select></label><label>小径側 呼び径<select id="n2"><option selected="" value="60.5">50A (2B)</option><option value="76.3">65A (2½B)</option><option value="89.1">80A (3B)</option><option value="114.3">100A (4B)</option><option value="139.8">125A (5B)</option><option value="165.2">150A (6B)</option><option value="216.3">200A (8B)</option><option value="267.4">250A (10B)</option><option value="custom">実寸入力</option></select></label><label>大径側 外径 D1 (mm)<input id="d1" step="any" type="number" value="114.3"/></label><label>小径側 外径 D2 (mm)<input id="d2" step="any" type="number" value="60.5"/></label><label>レジューサ長さ L (mm)<input id="l" step="any" type="number" value="102"/></label></div><button id="calc">計算</button><div class="res" id="out">寸法を入力してください。</div><p class="note">偏芯量=(D1−D2)/2。角度は外径と長さから求める幾何計算です。実製品寸法はメーカー・規格値を優先してください。</p></section><section class="seo-guide"><h2>レジューサを現場で確認する</h2><p>異径配管で、大径側と小径側の外径差から偏芯量とテーパー形状を確認します。呼び径は入力を速くするための補助で、製作前は使用するレジューサの規格・メーカー実寸を優先してください。</p><h3>基本式</h3><p>偏芯量 = (D1 − D2) / 2。入力したレジューサ長さLと径差から幾何学的な角度を求めます。偏芯レジューサではフラット側の向きも図面・流体条件に合わせて確認してください。</p><h3>関連する現場計算</h3><p><a href="pipe-diameter.html">配管径換算</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="pipe-circumference.html">円周・展開長</a> ｜ <a href="tools.html">計算ツール一覧</a></p><p class="note">表示値は形状確認用です。製品の面間・外径・肉厚は適用規格とメーカー資料を最終確認してください。</p></section><section class="ad-plan" style="margin:28px 0;padding:16px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;background:#f8fafc"><h2>広告掲載について</h2><p>広告を導入する場合も、入力欄・計算ボタン・結果表示から離した位置に配置し、計算操作を妨げない方針です。</p></section><p><a href="index.html">← 計算ツール一覧へ戻る</a></p></main><script>(()=>{const $=id=>document.getElementById(id);function sync(sel,input){$(sel).addEventListener('change',()=>{if($(sel).value!=='custom')$(input).value=$(sel).value})}sync('n1','d1');sync('n2','d2');$('calc').addEventListener('click',()=>{const d1=+$('d1').value,d2=+$('d2').value,l=+$('l').value;if(!(d1>d2)||!(d2>0)||!(l>0)){$('out').textContent='D1 > D2、長さ > 0 で入力してください';return}const diff=d1-d2,e=diff/2,con=Math.atan(e/l)*180/Math.PI,ecc=Math.atan(diff/l)*180/Math.PI;$('out').innerHTML=`径差 <b>${diff.toFixed(1)} mm</b><br>偏芯量 <b>${e.toFixed(1)} mm</b><br>同心レジューサ片側角度 <b>${con.toFixed(2)}°</b><br>偏心レジューサ傾斜側角度 <b>${ecc.toFixed(2)}°</b>`})})();</script></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>レジューサ形状・偏芯量計算｜HAIKAN CALC</title>
+  <meta name="description" content="A呼称・インチ呼称を選ぶだけで外径を自動入力。大径・小径・長さから偏芯量とレジューサ角度を計算。">
+  <link rel="canonical" href="https://yuuki12100515-bot.github.io/haikan-calc/reducer-geometry.html">
+  <style>
+    :root{--ink:#17202a;--blue:#1677ff;--muted:#65707a;--bg:#f4f6f8;--line:#ccd2d8}
+    *{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;margin:0;background:var(--bg);color:var(--ink)}
+    nav{display:flex;gap:8px;overflow:auto;padding:10px 16px;background:#fff;border-bottom:1px solid #e5e7eb}
+    nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+    header{background:var(--ink);color:#fff;padding:20px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+    .card{background:#fff;border-radius:16px;padding:18px;margin:14px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-weight:800;font-size:14px;margin:10px 0}input,select,button{width:100%;font-size:18px;padding:13px;border-radius:11px;border:1px solid var(--line);margin-top:5px}
+    button{background:var(--blue);color:#fff;border:0;font-weight:900}.res{background:#eef5ff;padding:15px;border-radius:12px;line-height:1.8;margin-top:14px}.note{font-size:13px;color:var(--muted);line-height:1.7}a{color:var(--blue)}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav aria-label="HAIKAN CALC">
+    <a href="index.html">計算機一覧</a><a href="cut-length.html">切り寸</a><a href="cut-el.html">カットEL</a><a href="offset.html">逃げ</a><a href="flow-velocity.html">流量</a>
+  </nav>
+  <header><div class="wrap"><b style="font-size:25px">レジューサ形状計算</b><div>径差・偏芯量・テーパー角度を確認</div></div></header>
+  <main class="wrap">
+    <section class="card">
+      <h1>レジューサ形状計算</h1>
+      <div class="grid">
+        <label>大径側（A・インチ）<select id="n1"></select></label>
+        <label>小径側（A・インチ）<select id="n2"></select></label>
+        <label>大径側 外径 D1 (mm)<input id="d1" step="any" type="number" value="114.3"></label>
+        <label>小径側 外径 D2 (mm)<input id="d2" step="any" type="number" value="60.5"></label>
+        <label>レジューサ長さ L (mm)<input id="length" step="any" type="number" value="102"></label>
+      </div>
+      <button id="calc" type="button">計算</button>
+      <div class="res" id="out" aria-live="polite">寸法を入力してください。</div>
+      <p class="note">偏芯量＝(D1−D2)÷2。実製品の面間・外径はメーカーおよび適用規格の値を優先してください。</p>
+    </section>
+    <section class="card">
+      <h2>結果の見方</h2>
+      <p>同心レジューサは片側のテーパー角度、偏心レジューサはフラット側と反対側の傾斜角度を表示します。偏心レジューサではフラット側の向きも図面・流体条件に合わせて確認してください。</p>
+      <p><a href="pipe-diameter.html">配管口径の目安</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="pipe-circumference.html">円周・等分ピッチ</a></p>
+    </section>
+    <p><a href="index.html">← 計算機一覧へ戻る</a></p>
+  </main>
+  <script>
+    (()=>{
+      const $=id=>document.getElementById(id);
+      const sizes=[
+        [15,'1/2″',21.7],[20,'3/4″',27.2],[25,'1″',34],[32,'1-1/4″',42.7],[40,'1-1/2″',48.6],
+        [50,'2″',60.5],[65,'2-1/2″',76.3],[80,'3″',89.1],[90,'3-1/2″',101.6],[100,'4″',114.3],
+        [125,'5″',139.8],[150,'6″',165.2],[200,'8″',216.3],[250,'10″',267.4],[300,'12″',318.5],
+        [350,'14″',355.6],[400,'16″',406.4],[450,'18″',457.2],[500,'20″',508]
+      ];
+      function build(id,selected){
+        const select=$(id);
+        for(const [a,inch,od] of sizes){const o=document.createElement('option');o.value=od;o.textContent=a+'A（'+inch+'）';if(a===selected)o.selected=true;select.appendChild(o)}
+        const custom=document.createElement('option');custom.value='custom';custom.textContent='実寸入力';select.appendChild(custom);
+      }
+      function sync(selectId,inputId){$(selectId).addEventListener('change',()=>{if($(selectId).value!=='custom')$(inputId).value=$(selectId).value})}
+      build('n1',100);build('n2',50);sync('n1','d1');sync('n2','d2');
+      $('calc').addEventListener('click',()=>{
+        const d1=+$('d1').value,d2=+$('d2').value,length=+$('length').value;
+        if(!(d1>d2)||!(d2>0)||!(length>0)){$('out').textContent='D1 ＞ D2、長さ ＞ 0 で入力してください。';return}
+        const diff=d1-d2,eccentricity=diff/2;
+        const concentricAngle=Math.atan(eccentricity/length)*180/Math.PI;
+        const eccentricAngle=Math.atan(diff/length)*180/Math.PI;
+        $('out').innerHTML='径差 <b>'+diff.toFixed(1)+' mm</b><br>偏芯量 <b>'+eccentricity.toFixed(1)+' mm</b><br>同心レジューサ片側角度 <b>'+concentricAngle.toFixed(2)+'°</b><br>偏心レジューサ傾斜側角度 <b>'+eccentricAngle.toFixed(2)+'°</b>';
+      });
+      $('calc').click();
+    })();
+  </script>
+</body>
+</html>
