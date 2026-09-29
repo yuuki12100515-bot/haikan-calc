@@ -1,0 +1,80 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>配管3方向振り・ローリングオフセット計算｜HAIKAN CALC</title><meta name="description" content="Rise・Roll・エルボ角度から3方向の振り・逃げ（ローリングオフセット）の真のオフセット、芯芯実長、引き寸、直管切り寸を無料計算。">
+<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#17202a}.w{max-width:640px;margin:auto}.c{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px #0001}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-weight:700;font-size:14px}input,select,button{width:100%;box-sizing:border-box;font-size:18px;padding:14px;border-radius:12px;border:1px solid #ccd1d5;margin-top:6px}button{background:#1677ff;color:#fff;border:0;font-weight:800;margin-top:18px}.r{margin-top:16px;background:#eef5ff;padding:16px;border-radius:14px;line-height:1.85}.hero{font-size:23px}.n{font-size:13px;color:#586069;margin-top:12px}.hidden{display:none}@media(max-width:480px){.g{grid-template-columns:1fr}}</style><link rel="canonical" href="https://haikan-calc.netlify.app/rolling-offset.html"></head>
+<body>
+
+<nav class="hc-mini-nav" aria-label="HAIKAN CALC">
+  <a href="index.html">トップ</a>
+  <a href="cut-length.html">切り寸</a>
+  <a href="cut-el.html">カットEL</a>
+  <a href="offset.html">逃げ</a>
+  <a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<div style="max-width:640px;margin:0 auto 12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+<a href="index.html" style="text-decoration:none;font-weight:800;color:#1677ff">← HAIKAN CALC トップ</a>
+</div><div class="w"><div class="c"><h1>3方向振り・タスキ振り（ローリングオフセット）＋カットエルボ</h1><p>進み・高さ・奥行きの3寸法から、真の逃げ・振り角度・芯々実長・直管切り寸まで自動計算します。</p>
+<div class="g">
+<label>進み H (mm)<input id="run" type="number" value="707.1"></label>
+<label>高さ V (mm)<input id="rise" type="number" value="500"></label>
+<label>奥行き D (mm)<input id="roll" type="number" value="500"></label>
+<label>角度の決め方<select id="angleMode"><option value="auto" selected>H・V・Dから自動</option><option value="preset">EL角度を指定</option></select></label>
+<label id="angWrap" class="hidden">EL角度 (°)<select id="ang"><option>22.5</option><option>30</option><option selected>45</option><option>60</option></select></label>
+<label>口径<select id="size"><option>50</option><option>65</option><option selected>80</option><option>100</option><option>125</option><option>150</option></select></label>
+<label>EL種類<select id="etype"><option value="LR">LR</option><option value="SR">SR</option></select></label>
+<label>引き寸モード<select id="mode"><option value="auto">自動（カットエルボ計算）</option><option value="manual">手入力</option></select></label>
+<label id="m1" class="hidden">引き寸1 (mm)<input id="t1" type="number" value="47.3"></label>
+<label id="m2" class="hidden">引き寸2 (mm)<input id="t2" type="number" value="47.3"></label>
+<label>追加控除 合計 (mm)<input id="extra" type="number" value="0"></label>
+</div><button id="go">計算する</button><div id="out" class="r">条件を入力してください</div>
+<div class="n">角度自動：θ = atan(√(V²+D²) / H)。芯々実長 = √(H²+V²+D²)。引き寸自動：R×tan(θ/2)。メーカー差がある場合は手入力を使用してください。</div></div></div>
+<script>(function(){const q=x=>document.getElementById(x),LR={50:76.2,65:95.3,80:114.3,100:152.4,125:190.5,150:228.6};
+q('mode').addEventListener('change',function(){let h=this.value!=='manual';q('m1').classList.toggle('hidden',h);q('m2').classList.toggle('hidden',h)});
+q('angleMode').addEventListener('change',function(){q('angWrap').classList.toggle('hidden',this.value!=='preset')});
+q('go').addEventListener('click',function(){let H=Number(q('run').value),V=Number(q('rise').value),D=Number(q('roll').value),S=Number(q('size').value),E=Number(q('extra').value),R=LR[S];if(q('etype').value==='SR')R/=1.5;
+let O=Math.hypot(V,D),auto=q('angleMode').value==='auto',A=auto?Math.atan2(O,Math.abs(H))*180/Math.PI:Number(q('ang').value);
+if(![H,V,D,A,S,E,R].every(Number.isFinite)||H<0||A<=0||A>=90||E<0||O<=0){q('out').textContent='入力値を確認してください';return}
+let rad=A*Math.PI/180,L=auto?Math.hypot(H,O):O/Math.sin(rad),adv=auto?H:O/Math.tan(rad),dir=Math.atan2(Math.abs(D),Math.abs(V))*180/Math.PI;
+let autoTake=R*Math.tan(A/2*Math.PI/180),T1=q('mode').value==='auto'?autoTake:Number(q('t1').value),T2=q('mode').value==='auto'?autoTake:Number(q('t2').value);
+if(!(O>0&&T1>=0&&T2>=0)){q('out').textContent='寸法を確認してください';return}let cut=L-T1-T2-E;if(cut<0){q('out').textContent='引き寸・控除が芯芯実長を超えています';return}
+q('out').innerHTML='<span class="hero">直管切り寸 <b>'+cut.toFixed(1)+' mm</b></span><br>芯芯実長 <b>'+L.toFixed(1)+' mm</b><br>真の逃げ '+O.toFixed(1)+' mm<br>進み '+adv.toFixed(1)+' mm<br>自動振り角度 <b>'+A.toFixed(2)+'°</b><br>V-D方向角 '+dir.toFixed(2)+'°<br>EL引き寸 ① <b>'+T1.toFixed(1)+' mm</b> / ② <b>'+T2.toFixed(1)+' mm</b><br>曲げ半径 R '+R.toFixed(1)+' mm<br><small>'+L.toFixed(1)+' − '+T1.toFixed(1)+' − '+T2.toFixed(1)+' − '+E.toFixed(1)+'</small>';
+});})();</script><div style="max-width:640px;margin:16px auto;padding:14px;border:1px dashed #c7cdd5;border-radius:14px;text-align:center;color:#7a838d;font:14px -apple-system,BlinkMacSystemFont,sans-serif">広告スペース（正式広告導入予定）</div><section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7"><h2 style="font-size:19px">使い方と確認ポイント</h2><p>現場寸法を入力して計算し、表示された単位と計算条件を確認してください。製作・施工に使用する場合は、図面、適用規格、メーカー寸法、現場条件を優先して最終確認してください。</p><p>HAIKAN CALCでは、結果だけでなく途中の寸法や倍率も表示し、現場で検算しやすい計算ツールを目指しています。</p></section><div style="max-width:640px;margin:16px auto;background:#fff;padding:16px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif"><b>関連する現場計算</b><br><a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="rolling-offset.html">3方向の振り・逃げ（ローリングオフセット）</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="slope.html">配管勾配・高低差</a> ｜ <a href="sgp-weight.html">SGP重量・保有水量</a></div>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">次に使える関連計算</h2>
+<p><a href="cut-el.html">カットエルボ</a> ｜ <a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="cut-length.html">芯々から切り寸</a></p>
+<p style="color:#5f6873;font-size:14px">同じ製作・施工の流れで使う計算へそのまま移動できます。</p>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">現場で使う前の確認</h2>
+<ul style="padding-left:20px">
+<li>図面・現場寸法・適用規格を最優先してください。</li>
+<li>メーカーや継手形式で寸法が変わる場合は実寸・メーカー値を使用してください。</li>
+<li>計算結果は途中値も見て、単位と入力条件を確認してください。</li>
+</ul>
+</section>
+
+<section data-strong-page-v3="1" style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style='font-size:19px;margin-top:0'>使用例</h2><p>高さ500mm・奥行き500mm・80A LR・45°なら、真の逃げ <b>707.1mm</b>、芯々実長 <b>1000.0mm</b>、直管切り寸は約 <b>905.3mm</b> です。</p><h2 style='font-size:19px'>通常の逃げとの違い</h2><p>横だけ・上下だけではなく、高さと奥行きの両方に同時に振る時に使います。一般にローリングオフセットと呼ばれます。</p>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">よくある質問</h2>
+<details><summary><b>真の逃げとは？</b></summary><p>高さ方向と奥行き方向のズレを合成した、実際に配管が逃げる距離です。</p></details>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">関連計算</h2>
+<p><a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="cut-el.html">カットエルボ</a> ｜ <a href="cut-length.html">芯々から切り寸</a></p>
+</section>
+
+
+<div class="hc-ad-slot" data-ad-slot="content">
+  <strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+
+
+<section class="card hc-seo-info"><h2>ローリングオフセットの使い方</h2><p>水平・高さ・奥行きの3方向にずれる配管では、平面だけの寸法では実長を決められません。この計算では3成分から配管の実長と角度を確認できます。現場では基準点と各方向の符号を先に決め、入力値が同じ基準から測られていることを確認してください。計算結果は製作前の確認値として使い、継手の実寸や芯寸法は採用規格・メーカー寸法と照合してください。</p></section>
+</body></html>

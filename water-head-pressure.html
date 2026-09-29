@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>水頭・圧力換算｜mH2O・kPa・MPa・bar｜HAIKAN CALC</title>
+<meta content="水頭mH2Oと圧力kPa・MPa・barを無料換算。水の高さから静水圧、圧力から水頭を相互計算できます。" name="description"/>
+<link href="https://haikan-calc.netlify.app/water-head-pressure.html" rel="canonical"/>
+<style>
+:root{--bg:#f4f6f8;--ink:#17202a;--sub:#66707a;--blue:#1677ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0000000c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:14px;font-weight:800}input,select,button{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
+button{background:var(--blue);color:#fff;border:0;font-weight:900}
+.result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
+.note{font-size:13px;color:var(--sub);line-height:1.7}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}
+@media(max-width:620px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"水頭・圧力換算","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
+</head><body>
+<nav aria-label="HAIKAN CALC" class="hc-mini-nav">
+<a href="index.html">トップ</a>
+<a href="cut-length.html">切り寸</a>
+<a href="cut-el.html">カットEL</a>
+<a href="offset.html">逃げ</a>
+<a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<header><div class="wrap"><h1>水頭・圧力換算</h1><p>mH₂O ⇄ kPa / MPa / bar を相互計算。</p></div></header>
+<main class="wrap"><p><a href="index.html">← HAIKAN CALC トップ</a></p>
+<section class="card">
+<h2>水頭 → 圧力</h2>
+<div class="grid">
+<label>水頭 (mH₂O)<input id="head" step="0.01" type="number" value="10"/></label>
+<label>液体密度 (kg/m³)<input id="rho" step="1" type="number" value="1000"/></label>
+</div>
+<button id="calc">圧力を計算</button><div class="result" id="res"></div>
+</section>
+<section class="card">
+<h2>圧力 → 水頭</h2>
+<div class="grid">
+<label>圧力<input id="p" step="0.001" type="number" value="0.1"/></label>
+<label>単位<select id="unit"><option value="mpa">MPa</option><option value="kpa">kPa</option><option value="bar">bar</option></select></label>
+<label>液体密度 (kg/m³)<input id="rrho" step="1" type="number" value="1000"/></label>
+</div>
+<button id="rcalc">水頭を計算</button><div class="result" id="rres"></div>
+</section>
+<section class="card"><h2>計算式</h2>
+<p><b>p = ρgh</b></p>
+<p class="note">ρ：密度、g：重力加速度 9.80665m/s²、h：水頭。水を1000kg/m³とすると、10mH₂O ≒ 98.07kPa ≒ 0.0981MPa。</p>
+</section>
+<section class="card"><h2>現場での目安</h2>
+<p>水の場合、<b>約10.2mH₂O ≒ 0.1MPa</b>です。</p>
+<p class="note">温度や液体密度で変わるため、薬液・温水などは密度を変更してください。</p>
+</section>
+<section class="card"><h2>関連計算</h2><div class="links"><a href="flow-velocity.html">配管の流量・流速</a><a href="fill-time.html">タンク・配管の充填時間</a><a href="pipe-volume.html">配管内容積・充水量</a></div></section>
+<section class="card hc-seo-info"><h2>水頭と圧力の換算について</h2><p>水頭mH2Oは、水柱の高さで圧力を表す方法です。ポンプ揚程や配管圧力を比較するときに、kPa・MPa・barと水頭を同じ基準へ換算すると確認しやすくなります。この換算は水を基準とした目安です。密度が異なる液体では比重を考慮してください。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id), g=9.80665;
+$('calc').onclick=()=>{let h=+$('head').value,r=+$('rho').value;if(!(h>=0&&r>0))return $('res').textContent='入力値を確認してください';let pa=r*g*h,kpa=pa/1000,mpa=pa/1e6,bar=pa/1e5;$('res').innerHTML='<span class="big">圧力 <b>'+mpa.toFixed(4)+' MPa</b></span><br>'+kpa.toFixed(2)+' kPa<br>'+bar.toFixed(4)+' bar';}
+$('rcalc').onclick=()=>{let p=+$('p').value,u=$('unit').value,r=+$('rrho').value;if(!(p>=0&&r>0))return $('rres').textContent='入力値を確認してください';let pa=u==='mpa'?p*1e6:u==='kpa'?p*1000:p*1e5;let h=pa/(r*g);$('rres').innerHTML='<span class="big">水頭 <b>'+h.toFixed(2)+' m</b></span><br>'+h.toFixed(2)+' mH₂O';}
+$('calc').click();$('rcalc').click();
+</script><p style="max-width:760px;margin:16px auto;padding:0 16px"><a href="pressure-loss.html">直管の簡易圧力損失</a></p>
+<section class="field-guide"><h2>使いどころ</h2><p>水頭と圧力の換算は、高低差による静水圧やポンプ揚程の感覚をそろえるのに便利です。水以外の流体では密度が異なるため、同じ高さでも圧力は変わります。</p></section><div class="hc-ad-slot" data-ad-slot="content">
+<strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+</body></html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC</title>
+<meta name="description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
+<link rel="canonical" href="https://haikan-calc.netlify.app/cut-length.html">
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#17202a;--sub:#66707a;--blue:#1677ff;--green:#08783e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0000000c}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.tabs button{width:100%;min-width:0;white-space:nowrap}
+button,input,select{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
+button{background:var(--blue);color:#fff;border:0;font-weight:900}.on{background:var(--blue)!important;color:#fff!important}.off{background:#eef2f6!important;color:#17202a!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-size:14px;font-weight:800}
+.side{border:1px solid #e1e6eb;border-radius:14px;padding:14px}.result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
+.note{font-size:13px;color:var(--sub);line-height:1.7}.ok{color:var(--green);font-weight:800}.warn{background:#fff7ea;border:1px solid #ffd9a4;border-radius:12px;padding:12px;color:#7c4700;margin-top:12px}.hidden{display:none}
+.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}.ad{display:none;border:1px dashed #c7cdd5;border-radius:14px;padding:12px;text-align:center;color:#7a838d;background:#fff}
+details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.tabs button{font-size:16px;padding:12px 8px}h1{font-size:28px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"芯々から切り寸","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true,"url":"https://haikan-calc.netlify.app/cut-length.html","description":"BW・SW・ねじ込み・塩ビの主要継手に対応した配管切り寸計算。"}
+</script>
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HAIKAN CALC">
+<meta property="og:title" content="芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC">
+<meta property="og:description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
+<meta property="og:url" content="https://haikan-calc.netlify.app/cut-length.html">
+<meta name="twitter:card" content="summary">
+
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"HAIKAN CALC","item":"https://haikan-calc.netlify.app/"},
+        {"@type":"ListItem","position":2,"name":"芯々から切り寸","item":"https://haikan-calc.netlify.app/cut-length.html"}
+      ]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[{"@type":"Question","name":"芯々寸法からどうやって切り寸を出しますか？","acceptedAnswer":{"@type":"Answer","text":"芯々寸法から左右の継手の実効控除寸法と追加控除を引いて直管切り寸を求めます。"}},{"@type":"Question","name":"フランジやバルブも計算できますか？","acceptedAnswer":{"@type":"Answer","text":"無料版ではメーカー差が大きいためA/B寸法の手入力で対応します。"}}]
+    }
+  ]
+}
+</script>
+
+</head>
+<body>
+
+<nav class="hc-mini-nav" aria-label="HAIKAN CALC">
+  <a href="index.html">トップ</a>
+  <a href="cut-length.html">切り寸</a>
+  <a href="cut-el.html">カットEL</a>
+  <a href="offset.html">逃げ</a>
+  <a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+
+<header><div class="wrap"><h1>芯々から切り寸</h1><p>BW・SW・ねじ・塩ビ。よく使う継手は自動、特殊品は手入力で対応。</p></div></header>
+<main class="wrap">
+<p><a href="index.html">← HAIKAN CALC トップ</a></p>
+
+<section class="card">
+<h2>① 配管方式</h2>
+<div class="tabs">
+<button id="bw" class="on">BW溶接</button>
+<button id="sw" class="off">SW</button>
+<button id="thread" class="off">ねじ込み</button>
+<button id="pvc" class="off">塩ビ</button>
+</div>
+<p id="methodNote" class="note"></p><p class="note" id="methodHint">4方式すべて表示されます。BW / SW / ねじ込み / 塩ビから選択してください。</p>
+</section>
+
+<section class="card">
+<h2>② 芯々・口径</h2>
+<div class="grid">
+<label>芯々 C-C (mm)<input id="cc" type="number" value="1000" step="0.1"></label>
+<label>主管口径<select id="size"></select></label>
+<label id="scheduleWrap" class="hidden">SWスケジュール
+<select id="schedule"><option value="80">Sch80</option><option value="160">Sch160</option></select></label>
+<label id="pvcSystemWrap" class="hidden">塩ビ系統
+<select id="pvcSystem"><option value="TS">TS / VP</option><option value="HITS">HI-TS / HIVP</option><option value="DV">DV</option><option value="VUDV">VU-DV</option><option value="HT">HT</option></select></label>
+<label>追加控除・調整 (mm)<input id="extra" type="number" value="0" step="0.1"></label>
+</div>
+</section>
+
+<section class="card">
+<h2>③ 左右の継手</h2>
+<div class="grid">
+<div class="side">
+<h3>左継手</h3>
+<label>種類<select id="leftType"></select></label>
+<label id="leftBranchWrap" class="hidden">枝口径<select id="leftBranch"></select></label>
+<label id="leftPosWrap" class="hidden">使う側<select id="leftPos"><option value="run1">直進側①</option><option value="run2">直進側②</option><option value="branch">枝側</option></select></label>
+<label>中心→端面/底面 A (mm)<input id="leftA" type="number" step="0.1"></label>
+<label>差込み・ねじ込み B (mm)<input id="leftB" type="number" step="0.1"></label>
+<div id="leftStatus" class="note"></div>
+</div>
+<div class="side">
+<h3>右継手</h3>
+<label>種類<select id="rightType"></select></label>
+<label id="rightBranchWrap" class="hidden">枝口径<select id="rightBranch"></select></label>
+<label id="rightPosWrap" class="hidden">使う側<select id="rightPos"><option value="run1">直進側①</option><option value="run2">直進側②</option><option value="branch">枝側</option></select></label>
+<label>中心→端面/底面 A (mm)<input id="rightA" type="number" step="0.1"></label>
+<label>差込み・ねじ込み B (mm)<input id="rightB" type="number" step="0.1"></label>
+<div id="rightStatus" class="note"></div>
+</div>
+</div>
+<button id="go">切り寸を計算</button>
+<div id="result" class="result"></div>
+</section>
+
+<div class="ad">広告スペース（正式広告導入予定）</div>
+
+<section class="card">
+<h2>無料版の対応範囲</h2>
+<p class="ok">よく使う継手は自動。特殊品・メーカー差が大きいものは手入力です。</p>
+<p class="note">BW：90°LR/SR・45°LR・同径TEE ／ SW：90°・45°EL・同径TEE・クロス ／ ねじ：90°・45°EL・TEE・クロス ／ 塩ビ：TS・HI-TS・DV・VU-DV・HTの主要エルボ・チーズ/Y。</p>
+<div class="warn">製作前は図面・適用規格・メーカー寸法・実物を優先してください。自動値がない継手はA/Bを手入力できます。</div>
+</section>
+
+<section class="card">
+<h2>使い方</h2>
+<p>芯々寸法を入力し、左右の配管方式と継手を選びます。差込み式・ねじ込み・塩ビは、中心から底面までの寸法と差込み量から実効控除を求めます。</p>
+<p><b>切り寸 = 芯々 − 左実効控除 − 右実効控除 − 追加控除</b></p>
+</section>
+
+<section class="card"><h2>使用例</h2><p>80A・芯々1000mm・両側90°LRなら、左右の控除114.3mmずつで、直管切り寸は <b>771.4mm</b> です。</p></section>
+
+<section class="card">
+<h2>よくある質問</h2>
+<details><summary>フランジやバルブも使えますか？</summary><p>製品差が大きいため、無料版ではメーカー寸法をA/Bへ手入力して計算します。有料版・アプリではメーカー別データの活用を予定しています。</p></details>
+<details><summary>異径品や特殊継手は？</summary><p>無料版は代表品を優先しています。未登録品でもA/Bを直接入力すれば同じ計算式で使えます。</p></details>
+</section>
+
+<section class="card"><h2>関連計算</h2><div class="links"><a href="cut-el.html">カットエルボ</a><a href="offset.html">逃げ寸法（オフセット）</a><a href="rolling-offset.html">3方向の振り・逃げ</a><a href="slope.html">配管勾配・高低差</a></div></section>
+
+<section class="card">
+<h2>さらに自動化したい方へ</h2>
+<p class="note">メーカー別継手寸法、製作図、BOM、定尺取りまでつなぐ配管製作アプリを開発中です。</p>
+<a href="app.html" style="display:block;text-align:center;background:#17202a;color:white;text-decoration:none;padding:14px;border-radius:12px;font-weight:900">アプリ開発を見る</a>
+</section>
+</main>
+
+<script>
+(()=>{const $=id=>document.getElementById(id);let method='bw';
+const sizeSets={bw:[15,20,25,32,40,50,65,80,100,125,150],sw:[15,20,25,32,40,50,65,80],thread:[15,20,25,32,40,50,65,80,100,125,150],pvc:[13,16,20,25,30,40,50,65,75,100,125,150]};
+const lists={bw:[['90LR','90°EL LR'],['90SR','90°EL SR'],['45LR','45°EL LR'],['TEE','同径TEE'],['CUSTOM','その他・手入力']],sw:[['90EL','90°EL'],['45EL','45°EL'],['TEE','同径TEE'],['CROSS','クロス'],['CUSTOM','その他・手入力']],thread:[['90EL','90°EL'],['45EL','45°EL'],['TEE','同径TEE'],['CROSS','クロス'],['CUSTOM','その他・手入力']],pvc:[['90EL','90°エルボ'],['TEE','チーズ / 90°Y'],['CUSTOM','その他・手入力']]};
+
+const bwEl={50:{'90LR':76.2,'90SR':50.8,'45LR':31.6},65:{'90LR':95.3,'90SR':63.5,'45LR':39.5},80:{'90LR':114.3,'90SR':76.2,'45LR':47.3},100:{'90LR':152.4,'90SR':101.6,'45LR':63.1},125:{'90LR':190.5,'90SR':127,'45LR':78.9},150:{'90LR':228.6,'90SR':152.4,'45LR':94.7}};
+const bwT={15:25.4,20:28.6,25:38.1,32:47.6,40:57.2,50:63.5,65:76.2,80:85.7,100:104.8,125:123.8,150:142.9};
+const sw={15:{C:9.6,g90:{80:15.9,160:19.1},g45:{80:11.1,160:12.7}},20:{C:12.7,g90:{80:19.1,160:22.2},g45:{80:12.7,160:14.3}},25:{C:12.7,g90:{80:22.2,160:27.0},g45:{80:14.3,160:17.5}},32:{C:12.7,g90:{80:27.0,160:31.8},g45:{80:17.5,160:20.6}},40:{C:12.7,g90:{80:31.8,160:38.1},g45:{80:20.6,160:25.4}},50:{C:15.9,g90:{80:38.1,160:41.3},g45:{80:25.4,160:28.6}},65:{C:15.9,g90:{80:41.3,160:57.2},g45:{80:28.6,160:31.8}},80:{C:15.9,g90:{80:57.2,160:63.5},g45:{80:31.8,160:34.9}}};
+const th={15:{e90:16,e45:10,t:16,c:16},20:{e90:20,e45:13,t:20,c:20},25:{e90:24,e45:15,t:24,c:24},32:{e90:30,e45:18,t:30,c:30},40:{e90:32,e45:21,t:32,c:32},50:{e90:36,e45:21,t:36,c:36},65:{e90:46,e45:26,t:46,c:46},80:{e90:51,e45:27,t:51,c:51},100:{e90:65,e45:33,t:65,c:65},125:{e90:76,e45:37,t:76,c:76},150:{e90:95,e45:45,t:95,c:95}};
+const tsEl={13:[36,10],16:[43,13],20:[50,15],25:[58,18],30:[65,21],40:[82,27],50:[96,33],65:[110,49],75:[120,56],100:[153,69],125:[192,88],150:[230,98]};
+const dvEl={30:[40,22],40:[49,27],50:[58,33],65:[77,42],75:[88,48],100:[112,62],125:[140,75],150:[168,88]};
+const vudvEl={40:[49,27],50:[58,33],65:[77,42],75:[88,48],100:[112,62],125:[140,75],150:[168,88]};
+const htElH={13:34,16:41,20:53,25:58,30:64,40:74,50:85,65:110,75:120,100:155,125:188,150:228};
+const htL={13:22,16:27,20:33,25:38,30:42,40:47,50:52,65:61,75:64,100:84,125:104,150:132};
+
+const tsT={'50x50':[96,96,33,33],'75x50':[105,110,41,47],'75x75':[120,120,56,56],'100x50':[125,122,41,59],'100x75':[140,132,56,68],'100x100':[152,152,68,68],'125x75':[168,150,64,66],'125x100':[177,169,73,85],'125x125':[190,190,86,86],'150x75':[195,158,63,94],'150x100':[208,182,76,98],'150x125':[219,205,87,101],'150x150':[230,230,98,98]};
+const htT={'50x50':[87,75],'50x40':[82,80],'65x50':[102,104],'65x65':[110,110],'75x50':[105,110],'75x75':[120,120],'100x50':[125,122],'100x75':[140,132],'100x100':[152,152],'125x125':[187,187],'150x150':[230,230]};
+const vuY={'50x50':[34,34,34],'75x50':[34,35,48],'75x75':[48,49,48],'100x50':[34,35,62],'100x75':[48,49,62],'100x100':[62,63,62],'150x100':[62,63,88]};
+const dvY={'50x40':[27,33,27],'65x50':[34,42,35],'75x50':[34,48,35],'75x65':[42,48,43],'100x50':[34,62,35],'100x65':[42,62,43],'100x75':[48,62,49],'125x50':[34,75,35],'125x75':[49,75,51]};
+const notes={bw:'BW：90°/45°エルボと同径TEEを自動入力。',sw:'SW：差込み深さを含めて実効控除を自動計算。',thread:'ねじ込み：代表継手のZ寸法を自動入力。',pvc:'塩ビ：TS / HI-TS / DV / VU-DV / HT の主要エルボ・チーズ/Yに対応。'};
+
+function pvcArr(){let sys=$('pvcSystem').value;if(sys==='DV')return [30,40,50,65,75,100,125,150];if(sys==='VUDV')return [40,50,65,75,100,125,150];return sizeSets.pvc}
+function setSizes(){let s=$('size'),arr=method==='pvc'?pvcArr():sizeSets[method],old=+s.value;s.innerHTML='';arr.forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v+'A';s.appendChild(o)});s.value=arr.includes(old)?old:arr[0]}
+function setTypes(side){let s=$(side+'Type');s.innerHTML='';lists[method].forEach(([v,t])=>{let o=document.createElement('option');o.value=v;o.textContent=t;s.appendChild(o)});s.value=method==='bw'?'90LR':'90EL'}
+function teeTable(){let sys=$('pvcSystem').value;return (sys==='TS'||sys==='HITS')?tsT:sys==='HT'?htT:sys==='VUDV'?vuY:sys==='DV'?dvY:null}
+function setBranches(side){let main=+$('size').value,tbl=teeTable(),sel=$(side+'Branch');sel.innerHTML='';if(tbl){Object.keys(tbl).filter(k=>+k.split('x')[0]===main).map(k=>+k.split('x')[1]).sort((a,b)=>b-a).forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v+'A';sel.appendChild(o)})}if(!sel.options.length){let o=document.createElement('option');o.value=main;o.textContent=main+'A';sel.appendChild(o)}}
+function manual(side,msg){$(side+'A').disabled=false;$(side+'B').disabled=false;$(side+'Status').textContent=msg}
+function setSide(side){
+ let type=$(side+'Type').value,n=+$('size').value,A=$(side+'A'),B=$(side+'B'),st=$(side+'Status'),sys=$('pvcSystem').value;
+ const teeAuto=method==='pvc'&&type==='TEE'&&teeTable();
+ $(side+'BranchWrap').classList.toggle('hidden',!teeAuto);$(side+'PosWrap').classList.toggle('hidden',!teeAuto);if(teeAuto)setBranches(side);
+
+ if(method==='bw'){
+   if(bwEl[n]&&bwEl[n][type]!=null){A.value=bwEl[n][type];B.value=0;st.textContent='自動：BWエルボ';return}
+   if(type==='TEE'&&bwT[n]!=null){A.value=bwT[n];B.value=0;st.textContent='自動：BW同径TEE';return}
+   return manual(side,'未登録：A/Bを手入力')
+ }
+ if(method==='sw'){
+   let d=sw[n],sch=+$('schedule').value;
+   if(d&&(type==='90EL'||type==='TEE'||type==='CROSS')){A.value=d.g90[sch];B.value=d.C;st.textContent='自動：SW G−C';return}
+   if(d&&type==='45EL'){A.value=d.g45[sch];B.value=d.C;st.textContent='自動：SW G45−C';return}
+   return manual(side,'未登録：A/Bを手入力')
+ }
+ if(method==='thread'){
+   let d=th[n],z=type==='90EL'?d?.e90:type==='45EL'?d?.e45:type==='TEE'?d?.t:type==='CROSS'?d?.c:null;
+   if(z!=null){A.value=z;B.value=0;st.textContent='自動：ねじ込みZ寸法';return}
+   return manual(side,'未登録：A/Bを手入力')
+ }
+ if(method==='pvc'){
+   if(teeAuto){
+     let branch=+$(side+'Branch').value,key=n+'x'+branch,pos=$(side+'Pos').value,d=teeTable()[key];
+     if(d){
+       if(sys==='TS'||sys==='HITS'){if(pos==='branch'){A.value=d[1];B.value=d[1]-d[3];st.textContent='自動：'+key+' '+sys+' 枝側'}else{A.value=d[0];B.value=d[0]-d[2];st.textContent='自動：'+key+' '+sys+' 直進側'}return}
+       if(sys==='HT'){let ins=pos==='branch'?htL[branch]:htL[n];A.value=pos==='branch'?d[1]:d[0];B.value=ins;st.textContent='自動：'+key+' HT '+(pos==='branch'?'枝側':'直進側');return}
+       if(sys==='VUDV'||sys==='DV'){let z=pos==='run1'?d[0]:pos==='run2'?d[1]:d[2];A.value=z;B.value=0;st.textContent='自動：'+key+' '+sys+' '+(pos==='run1'?'直進側①':pos==='run2'?'直進側②':'枝側');return}
+     }
+   }
+   if(type==='90EL'){
+     if((sys==='TS'||sys==='HITS')&&tsEl[n]){let x=tsEl[n];A.value=x[0];B.value=x[0]-x[1];st.textContent='自動：'+sys+' 90°EL';return}
+     if(sys==='DV'&&dvEl[n]){let x=dvEl[n];A.value=x[0];B.value=x[0]-x[1];st.textContent='自動：DV 90°EL';return}
+     if(sys==='VUDV'&&vudvEl[n]){let x=vudvEl[n];A.value=x[0];B.value=x[0]-x[1];st.textContent='自動：VU-DV 90°EL';return}
+     if(sys==='HT'&&htElH[n]){A.value=htElH[n];B.value=htL[n];st.textContent='自動：HT 90°EL';return}
+   }
+   return manual(side,'未登録：A/Bを手入力')
+ }
+}
+function refresh(){
+ ['bw','sw','thread','pvc'].forEach(id=>$(id).className=id===method?'on':'off');
+ $('scheduleWrap').classList.toggle('hidden',method!=='sw');
+ $('pvcSystemWrap').classList.toggle('hidden',method!=='pvc');
+ $('methodNote').textContent=notes[method];
+ setSizes();setTypes('left');setTypes('right');setSide('left');setSide('right');
+}
+['bw','sw','thread','pvc'].forEach(id=>$(id).onclick=()=>{method=id;refresh()});
+['left','right'].forEach(s=>{$(s+'Type').onchange=()=>setSide(s);$(s+'Branch').onchange=()=>setSide(s);$(s+'Pos').onchange=()=>setSide(s)});
+$('size').onchange=()=>{setSide('left');setSide('right')};
+$('schedule').onchange=()=>{setSide('left');setSide('right')};
+$('pvcSystem').onchange=()=>{setSizes();setSide('left');setSide('right')};
+$('go').onclick=()=>{
+ let cc=+$('cc').value,e=+$('extra').value,LA=+$('leftA').value,LB=+$('leftB').value,RA=+$('rightA').value,RB=+$('rightB').value;
+ if(![cc,e,LA,LB,RA,RB].every(Number.isFinite)||cc<=0||e<0||LA<0||LB<0||RA<0||RB<0||LB>LA||RB>RA){$('result').textContent='入力値を確認してください';return}
+ let l=LA-LB,r=RA-RB,cut=cc-l-r-e;if(cut<0){$('result').textContent='控除寸法が芯々を超えています';return}
+ $('result').innerHTML='<span class="big">切り寸 <b>'+cut.toFixed(1)+' mm</b></span><br>左 実効控除 <b>'+l.toFixed(1)+' mm</b>（A '+LA.toFixed(1)+' − B '+LB.toFixed(1)+'）<br>右 実効控除 <b>'+r.toFixed(1)+' mm</b>（A '+RA.toFixed(1)+' − B '+RB.toFixed(1)+'）<br>追加控除 '+e.toFixed(1)+' mm<br><small>'+cc.toFixed(1)+' − '+l.toFixed(1)+' − '+r.toFixed(1)+' − '+e.toFixed(1)+' = '+cut.toFixed(1)+'</small>';
+};
+refresh();$('go').click();
+})();
+</script>
+
+<section data-strong-v5="cut-length" style="max-width:720px;margin:16px auto;background:#fff;padding:18px;border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;line-height:1.8">
+<h2 style="margin-top:0;font-size:20px">芯々から切り寸を出す考え方</h2>
+<p>配管製作では、図面にある芯々寸法をそのまま直管の長さにはできません。左右の継手が占める寸法を差し引いて、実際に切る直管長を求めます。</p>
+<p><b>切り寸 = 芯々 − 左側控除 − 右側控除 − 追加控除</b></p>
+<h3 style="font-size:17px">BW・SW・ねじ・塩ビで何が違う？</h3>
+<ul>
+<li><b>BW</b>：中心から端面までの寸法を控除</li>
+<li><b>SW</b>：中心から底面までの寸法から差込み深さを戻す</li>
+<li><b>ねじ込み</b>：管端から継手中心までの実効寸法を使用</li>
+<li><b>塩ビ</b>：受口寸法・差込み寸法を考慮</li>
+</ul>
+<h3 style="font-size:17px">無料版の考え方</h3>
+<p>よく使う継手は自動入力し、メーカー差が大きいフランジ・バルブ・特殊継手は手入力にしています。無料版を複雑にしすぎず、現場ですぐ使えることを優先しています。</p>
+</section>
+
+<p style="max-width:760px;margin:16px auto;padding:0 16px"><a href="flange-hole-layout.html">フランジボルト穴割付</a></p>
+<div class="hc-ad-slot" data-ad-slot="content">
+  <strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+
+</body>
+</html>

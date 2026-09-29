@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>HAIKAN CALC｜配管職人の無料計算ツール</title>
+<meta content="配管職人向け無料計算サイト。芯々から切り寸、カットエルボ、配管の逃げ寸法（オフセット）、3方向の振り・逃げ（ローリングオフセット）、配管勾配、SGP重量・保有水量をスマホで無料計算。" name="description"/>
+<meta content="Mu6OfwNEJ3i5r7JsA0rDM6Opn7ILFenG_OLhOOrfm2o" name="google-site-verification">
+<link href="https://haikan-calc.netlify.app/" rel="canonical"/>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#17202a;--sub:#5f6873;--blue:#1677ff}
+*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);margin:0}
+header{background:#17202a;color:#fff;padding:30px 18px}.w{max-width:820px;margin:auto}h1{margin:0;font-size:34px}header p{margin:8px 0 0;color:#d7dde5;line-height:1.6}
+main{padding:18px}nav{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;font-weight:800}nav a{color:#1768cc}
+.ad{display:none;border:1px dashed #c7cdd5;border-radius:14px;padding:13px;text-align:center;color:#7a838d;margin:0 0 16px;background:#fff}
+.heroBox,.box{background:#fff;border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 4px 18px #0000000a}
+.heroBox h2,.box h2{margin:0 0 8px;font-size:21px}.muted{color:var(--sub);line-height:1.7}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{display:block;background:#fff;border-radius:18px;padding:18px;text-decoration:none;color:var(--ink);box-shadow:0 4px 18px #0000000c}
+.card b{font-size:20px}.card p{color:var(--sub);margin:8px 0 0;line-height:1.55}.tag{font-size:12px;color:var(--blue);font-weight:900}
+.usegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.use{background:#eef5ff;padding:14px;border-radius:14px;text-decoration:none;color:var(--ink);font-weight:800;line-height:1.35}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.step{background:#f7f8fa;padding:14px;border-radius:14px}.step b{display:block;margin-bottom:5px}
+.cta{display:block;background:#17202a;color:#fff;text-decoration:none;border-radius:14px;padding:16px;text-align:center;font-weight:900;margin-top:12px}
+.faq details{border-top:1px solid #e3e7eb;padding:12px 0}.faq summary{font-weight:800;cursor:pointer}.faq p{color:var(--sub);line-height:1.7}
+footer{padding:30px 18px;color:#69727d;font-size:13px;text-align:center;line-height:1.8}
+@media(max-width:650px){.grid,.steps{grid-template-columns:1fr}.usegrid{grid-template-columns:1fr 1fr}h1{font-size:30px}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "WebSite", "name": "HAIKAN CALC", "url": "https://haikan-calc.netlify.app/", "description": "配管職人向け無料計算ツール"}
+</script>
+</meta></head><body>
+<nav aria-label="HAIKAN CALC" class="hc-mini-nav">
+<a href="index.html">トップ</a>
+<a href="cut-length.html">切り寸</a>
+<a href="cut-el.html">カットEL</a>
+<a href="offset.html">逃げ寸法</a>
+<a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<header><div class="w"><h1>HAIKAN CALC</h1><p>職人の「ちょっと計算」を速く。<br/>無料・登録不要・スマホ対応。</p></div></header>
+<main class="w">
+<nav><a href="calculator.html">21計算機を使う</a><a href="index.html">計算ツール一覧</a><a href="about.html">サイト情報</a><a href="tools.html">現場用品・治具</a><a href="app.html">製作図アプリ</a><a href="contact.html">お問い合わせ</a></nav>
+<div class="ad">広告スペース（正式広告導入予定）</div>
+<section class="heroBox">
+<h2>何を計算したいですか？</h2>
+<p class="muted">配管工が現場で使う言葉から選べます。</p>
+<a class="cta" href="calculator.html">21種類の配管計算機をまとめて使う</a>
+<div class="usegrid">
+<a class="use" href="calculator.html#tool1">芯々から切り寸</a>
+<a class="use" href="cut-el.html">カットエルボ</a>
+<a class="use" href="rolling-offset.html">3方向振り・タスキ振り</a>
+<a class="use" href="offset.html">配管の逃げ寸法</a>
+<a class="use" href="slope.html">配管勾配・高低差</a>
+<a class="use" href="sgp-weight.html">SGP重量・保有水量</a>
+</div>
+</section>
+<section class="box" style="margin-top:16px">
+<h2>計算機一覧</h2>
+<p class="muted">用途別にまとめました。現場で使う名前を先に表示しています。</p>
+<h3>製作・切り寸</h3><div class="grid">
+<a class="card" href="calculator.html#tool1"><b>芯々から切り寸</b><p>BW・SW・ねじ込み・塩ビ対応。</p></a>
+<a class="card" href="cut-el.html"><b>カットエルボ</b><p>角度・引き寸・外R/内R側の切断位置。</p></a>
+<a class="card" href="offset.html"><b>配管の逃げ寸法</b><p>オフセットの芯々実長・進み・切り寸。</p></a>
+<a class="card" href="rolling-offset.html"><b>3方向振り・タスキ振り</b><p>高さ＋奥行きから実長・進み・切り寸。</p></a>
+<a class="card" href="slope.html"><b>配管勾配・高低差</b><p>1/100・％・‰・mm/m・角度を相互確認。</p></a>
+<a class="card" href="right-triangle.html"><b>斜め寸法・直角三角形</b><p>水平・高さから斜辺・角度・勾配を確認。</p></a>
+<a class="card" href="reducer-geometry.html"><b>レジューサ偏芯・テーパー</b><p>大径・小径・長さから偏芯量とテーパー角度。</p></a>
+</div>
+<h3>罫書き・割付</h3><div class="grid">
+<a class="card" href="pipe-circumference.html"><b>配管円周・等分ピッチ</b><p>円周・等分・角度マーキング。</p></a>
+<a class="card" href="flange-hole-layout.html"><b>フランジ穴割付</b><p>PCD・穴数からピッチ・弦長・座標。</p></a>
+<a class="card" href="stock-cut.html"><b>定尺取り・切断割付</b><p>複数の切り寸から必要本数・割付・端材を計算。</p></a>
+</div>
+<h3>流量・口径・圧力</h3><div class="grid">
+<a class="card" href="flow-velocity.html"><b>流量・流速</b><p>L/min・m³/h ⇄ m/s。</p></a>
+<a class="card" href="pipe-diameter.html"><b>配管口径の目安</b><p>流量と目標流速から必要内径。</p></a>
+<a class="card" href="pressure-loss.html"><b>直管の圧力損失</b><p>Darcy-Weisbach式による簡易計算。</p></a>
+<a class="card" href="reynolds.html"><b>レイノルズ数・摩擦係数</b><p>層流/乱流とDarcy摩擦係数。</p></a>
+<a class="card" href="water-head-pressure.html"><b>水頭・圧力換算</b><p>mH₂O ⇄ kPa / MPa / bar。</p></a>
+<a class="card" href="pump-head.html"><b>ポンプ必要揚程</b><p>高低差＋損失＋必要出口圧力。</p></a>
+</div>
+<h3>容量・重量・材料</h3><div class="grid">
+<a class="card" href="pipe-volume.html"><b>配管内容積・充水量</b><p>内径と長さからL・m³。</p></a>
+<a class="card" href="fill-time.html"><b>タンク・配管の充填時間</b><p>容量と流量から必要時間。</p></a>
+<a class="card" href="sgp-weight.html"><b>SGP重量・保有水量</b><p>管重量・水量・満水重量。</p></a>
+<a class="card" href="surface-area.html"><b>配管表面積・保温面積</b><p>塗装・保温・ラッキング数量の概算。</p></a>
+<a class="card" href="thermal-expansion.html"><b>配管の熱伸び・伸縮量</b><p>長さ・温度差から伸縮量。</p></a>
+</div></section>
+<section class="box">
+<h2>現場で使うための3つの方針</h2>
+<div class="steps">
+<div class="step"><b>① すぐ答え</b><span class="muted">スマホで入力して、結果まで迷わない。</span></div>
+<div class="step"><b>② 検算しやすい</b><span class="muted">答えだけでなく途中の数値や倍率も表示。</span></div>
+<div class="step"><b>③ 推測しない</b><span class="muted">規格・メーカーで変わる寸法は手入力も使える設計。</span></div>
+</div>
+</section>
+<section class="box">
+<h2>こんな時に使えます</h2>
+<p class="muted">配管製作前の切り寸確認、オフセット寸法の検算、勾配から高低差を出したい時、材料の重量や満水重量を見たい時など、現場で電卓を何度も叩く計算をまとめています。</p>
+</section>
+<div class="ad">広告スペース（結果ページ下・操作ボタン付近には置かない方針）</div>
+<section class="box">
+<h2>現場用品・治具</h2>
+<p class="muted">計算結果と関係する測定用品・工具・治具だけを紹介する予定です。オーダー治具は、用途と寸法を確認して図面承認後に製作する流れを予定しています。</p>
+<a class="cta" href="tools.html">現場用品・治具を見る</a>
+</section>
+<section class="box">
+<h2>配管製作図アプリも開発中</h2>
+<p class="muted">製作図、芯芯・切り寸、BOM、定尺取りまで一続きにする方向で開発しています。</p>
+<a class="cta" href="app.html">配管製作図アプリについて</a>
+</section>
+<section class="box faq">
+<h2>よくある質問</h2>
+<details><summary>無料で使えますか？</summary><p>現在の計算ツールは無料・登録不要で利用できます。</p></details>
+<details><summary>計算結果をそのまま製作に使えますか？</summary><p>図面、適用規格、メーカー寸法、現場条件を優先して最終確認してください。規格や製品で寸法が変わるものは、手入力できるようにしているページもあります。</p></details>
+<details><summary>スマホでも使えますか？</summary><p>iPhone/Safariを含むスマホ利用を前提に、入力欄と結果表示を大きめに設計しています。</p></details>
+</section>
+</main>
+<footer>© HAIKAN CALC<br/><a href="about.html">このサイトについて</a> ｜ <a href="privacy.html">プライバシー</a> ｜ <a href="terms.html">利用上の注意</a> ｜ <a href="contact.html">お問い合わせ</a></footer>
+</body></html>

@@ -1,0 +1,280 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>カットエルボ計算｜角度・引き寸・切断位置｜HAIKAN CALC</title><meta name="description" content="カットエルボの引き寸、外R側・内R側の切断位置を無料計算。LR/SRと仕上がり角度から現場罫書きを確認できます。"><style>body{font-family:-apple-system,sans-serif;background:#f4f5f7;margin:0;color:#17202a}header{background:#17202a;color:#fff;padding:20px}.wrap{max-width:760px;margin:auto;padding:15px}.card{background:#fff;border-radius:15px;padding:17px;margin:12px 0}.tabs{display:flex;gap:7px;overflow:auto}.tabs button,button.calc{border:0;border-radius:10px;padding:12px;font-weight:700}.tabs button{white-space:nowrap}.tabs .on,button.calc{background:#17202a;color:#fff}.tool{display:none}.tool.on{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{font-size:13px;font-weight:700}input,select{box-sizing:border-box;width:100%;font-size:18px;padding:11px;margin-top:5px;border:1px solid #ccd1d7;border-radius:9px}button.calc{width:100%;margin-top:14px}.res{background:#eef1f4;padding:14px;border-radius:10px;margin-top:14px;line-height:1.8}.note{font-size:12px;color:#667085}@media(max-width:520px){.grid{grid-template-columns:1fr}}.tabs{-webkit-overflow-scrolling:touch}.tabs button{flex:0 0 auto;touch-action:manipulation}
+.tabs{display:flex;gap:10px;overflow-x:auto;padding:12px 0;-webkit-overflow-scrolling:touch}
+.tabs .tablink{flex:0 0 auto;display:inline-block;text-decoration:none;font-weight:700;padding:14px 18px;border-radius:16px;background:#e9e9eb;color:#1683ff;white-space:nowrap}
+.tabs .tablink:first-child{background:#17202a;color:#fff}
+.tool{display:block!important;scroll-margin-top:16px}
+.card.tool{margin-bottom:18px}
+</style><link rel="canonical" href="https://haikan-calc.netlify.app/cut-el.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HAIKAN CALC">
+<meta property="og:title" content="カットエルボ計算｜角度・引き寸・切断位置｜HAIKAN CALC">
+<meta property="og:description" content="カットエルボの引き寸、外R側・内R側の切断位置を無料計算。LR/SRと仕上がり角度から現場罫書きを確認できます。">
+<meta property="og:url" content="https://haikan-calc.netlify.app/cut-el.html">
+<meta name="twitter:card" content="summary">
+
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"HAIKAN CALC","item":"https://haikan-calc.netlify.app/"},
+        {"@type":"ListItem","position":2,"name":"カットエルボ","item":"https://haikan-calc.netlify.app/cut-el.html"}
+      ]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[{"@type":"Question","name":"カットエルボの引き寸はどう計算しますか？","acceptedAnswer":{"@type":"Answer","text":"中心半径Rと仕上がり角度θから、R×tan(θ/2)で引き寸の目安を求めます。"}},{"@type":"Question","name":"LRとSRで結果は変わりますか？","acceptedAnswer":{"@type":"Answer","text":"中心半径が異なるため、同じ口径・角度でも引き寸は変わります。"}}]
+    }
+  ]
+}
+</script>
+
+</head><body id="top"><header><h1 style="font-size:26px;margin:0">カットエルボ・配管現場計算</h1><div>職人の「ちょっと計算」を速く。</div></header><main class="wrap"><div class="tabs"><a class="tablink" href="#off">3D振り</a><a class="tablink" href="#slope">配管勾配・高低差</a><a class="tablink" href="#pipe">配管重量</a><a class="tablink" href="#steel">鋼材重量</a><a class="tablink" href="#cut">定尺取り</a><a class="tablink" href="#cutlen">芯々から切り寸</a><a class="tablink" href="#autoCut">自動切り寸</a><a class="tablink" href="#tee">TEE枝切り</a><a class="tablink" href="#cutel">カットエルボ</a><a class="tablink" href="#circlemark">円周・角度マーキング</a><a class="tablink" href="#pipeflow">配管一発計算</a><a class="tablink" href="#mastercalc">配管まとめ計算</a><a class="tablink" href="#cutel_simple">カットエルボ</a></div>
+<section id="off" class="card tool on"><h2>配管3D振り・実長</h2><div class="grid"><label>水平 H (mm)<input id="h" type="number"></label><label>高さ V (mm)<input id="v" type="number"></label><label>奥行 D (mm)<input id="d" type="number"></label></div><button class="calc" data-calc="calcOffset">計算</button><div class="res" id="offR">数値を入力してください</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section>
+<section id="slope" class="card tool"><h2>配管勾配・高低差</h2><div class="grid"><label>距離 (mm)<input id="dist" type="number"></label><label>勾配 (%)<input id="pct" type="number" step="any"></label></div><button class="calc" data-calc="calcSlope">計算</button><div class="res" id="slopeR">数値を入力してください</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section>
+<section id="pipe" class="card tool"><h2>配管重量（概算）</h2><div class="grid"><label>外径 (mm)<input id="od" type="number" step="any"></label><label>肉厚 (mm)<input id="th" type="number" step="any"></label><label>長さ (m)<input id="len" type="number" step="any"></label><label>材質<select id="rho"><option value="7850">炭素鋼</option><option value="7930">SUS304</option></select></label></div><button class="calc" data-calc="calcPipe">計算</button><div class="res" id="pipeR">数値を入力してください</div><div class="note">外径・肉厚と密度による概算値です。</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section>
+<section id="steel" class="card tool"><h2>PL・FB重量</h2><div class="grid"><label>幅 (mm)<input id="w" type="number"></label><label>厚み (mm)<input id="t" type="number"></label><label>長さ (mm)<input id="sl" type="number"></label><label>本数<input id="qty" type="number" value="1"></label></div><button class="calc" data-calc="calcSteel">計算</button><div class="res" id="steelR">数値を入力してください</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section>
+<section id="cut" class="card tool"><h2>定尺取り</h2>
+<label>定尺 (mm)<input id="stock" type="number" value="6000"></label><div id="stockPreset" style="display:flex;gap:8px;overflow:auto;margin:8px 0">
+<button type="button" data-stock="4000">4m</button>
+<button type="button" data-stock="5500">5.5m</button>
+<button type="button" data-stock="6000">6m</button></div>
+<label>切断代・刃厚 (mm)<input id="kerf" type="number" value="3" min="0" step="any"></label>
+<label>必要切寸（カンマ区切り）<input id="pieces" placeholder="2210,1430,1430,920,815,650"></label>
+<button class="calc" data-calc="calcCut">割付計算</button><div class="res" id="cutR">切寸を入力してください</div>
+<div class="note">各ピースに切断代を加えて割付します。</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section>
+<section id="cutlen" class="card tool"><h2>芯芯 → 直管切り寸</h2>
+<div class="grid"><label>芯芯 C-C (mm)<input id="cc" type="number"></label>
+<label>左側 引き寸 (mm)<input id="take1" type="number" value="0"></label>
+<label>右側 引き寸 (mm)<input id="take2" type="number" value="0"></label>
+<label>追加調整 (mm)<input id="adj" type="number" value="0"></label></div>
+<button class="calc" data-calc="calcCutLen">計算</button><div class="res" id="cutLenR">寸法を入力してください</div>
+<div class="note">切り寸 = 芯芯 − 左引き − 右引き ＋ 追加調整。継手規格DBは次段階で追加します。</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section><section class="card"><h2>アプリ基準の確認例</h2><div class="note">FL–P1–FL：500−5−5＝490.0 mm<br>FL–P2–80A LR90 EL：300−5−114.3＝180.7 mm<br>80A LR90 EL–P3–FL：500−114.3−5＝380.7 mm<br>TEE 100A×50A枝：500−95.3−5＝399.7 mm</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section><section id="autoCut" class="card tool"><h2>継手自動 → 直管切り寸</h2><div class="grid"><label>芯芯 (mm)<input id="acc" type="number" value="500"></label><label>口径<select id="asz"><option>50</option><option>65</option><option selected>80</option><option>100</option><option>125</option><option>150</option></select></label><label>始点<select id="ast"><option value="FL">FL</option><option value="90L">90°ロングEL</option><option value="90S">90°ショートEL</option></select></label><label>終点<select id="aen"><option value="FL">FL</option><option value="90L" selected>90°ロングEL</option><option value="90S">90°ショートEL</option></select></label></div><button class="calc" data-calc="calcAutoCut">自動計算</button><div class="res" id="autoCutR">条件を選択してください</div><div class="note">芯芯 − 始点引き − 終点引き。FL標準控除5mm。</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section><section id="tee" class="card tool"><h2>TEE 枝管切り寸</h2><label>芯端寸法 (mm)<input id="teeCE" type="number" value="500"></label><label>TEE組合せ<select id="teeKey"><option value="100x50">100A × 50A</option></select></label><label>枝先<select id="teeEnd"><option value="FL">FL</option><option value="NONE">控除なし</option></select></label><button class="calc" data-calc="calcTee">計算</button><div class="res" id="teeR">寸法を入力してください</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section><section id="cutel" class="card tool"><h2>カットエルボ基礎計算</h2><div class="grid"><label>母材<select id="mother"><option value="90">90°EL</option><option value="45">45°EL</option></select></label><label>必要角度 (°)<input id="needAng" type="number" value="60"></label><label>CLR (mm)<input id="clr" type="number" value="114.3"></label></div><button class="calc" data-calc="calcCutEl">計算</button><div class="res" id="cutElR">条件を入力してください</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section><section id="circlemark" class="card tool"><h2>円周・角度マーキング</h2><div class="grid"><label>直径 D (mm)<input id="cmD" type="number" value="418"></label><label>分割数<input id="cmN" type="number" value="4" min="1"></label><label>指定角度 θ (°)<input id="cmA" type="number" value="90"></label><label>π<select id="cmPi"><option value="3.141592653589793">π（高精度）</option><option value="3.14" selected>3.14（現場計算）</option></select></label></div><div id="cmPreset" style="display:flex;gap:8px;overflow:auto;margin:10px 0">
+<button type="button" data-angle="45">45°</button>
+<button type="button" data-angle="90">90°</button>
+<button type="button" data-angle="120">120°</button>
+<button type="button" data-angle="180">180°</button></div><button class="calc" data-calc="calcCircleMark">計算</button><div class="res" id="circleMarkR">条件を入力してください</div><div class="note">円周=D×π、等分=円周÷分割数、角度位置=円周×θ÷360。</div><div style="margin-top:16px"><a href="#top" style="text-decoration:none">↑ 計算メニューへ戻る</a></div></section><section id="pipeflow" class="card tool"><h2>配管一発計算</h2>
+<div class="note">水平H・高さV・奥行Dから、実長・上下角・平面角・選択口径の90°ロングEL引き寸をまとめて表示します。カットエルボ用の基礎値も同時表示。</div>
+<div class="grid">
+<label>水平 H (mm)<input id="pfH" type="number" value="500" step="any"></label>
+<label>高さ V (mm)<input id="pfV" type="number" value="500" step="any"></label>
+<label>奥行 D (mm)<input id="pfD" type="number" value="0" step="any"></label>
+<label>口径<select id="pfSize"><option>50</option><option>65</option><option selected>80</option><option>100</option><option>125</option><option>150</option></select></label>
+</div>
+<button class="calc" data-calc="calcPipeFlow">まとめて計算</button>
+<div class="res" id="pfR">寸法を入力してください</div>
+</section><section id="mastercalc" class="card tool"><h2>配管まとめ計算</h2>
+<div class="note">口径と寸法を1回入力して、角度振り・実長・EL引き寸・角度マーキング基礎値をまとめて計算します。</div>
+<div class="grid">
+<label>口径<select id="mcSize"><option>50</option><option>65</option><option selected>80</option><option>100</option><option>125</option><option>150</option></select></label>
+<label>水平 H (mm)<input id="mcH" type="number" value="500" step="any"></label>
+<label>高さ V (mm)<input id="mcV" type="number" value="500" step="any"></label>
+<label>奥行 D (mm)<input id="mcD" type="number" value="0" step="any"></label>
+<label>芯芯 C-C (mm)<input id="mcCC" type="number" value="500" step="any"></label>
+<label>始点<select id="mcStart"><option value="FL">FL</option><option value="90L">90°ロングEL</option><option value="90S">90°ショートEL</option></select></label>
+<label>終点<select id="mcEnd"><option value="FL">FL</option><option value="90L" selected>90°ロングEL</option><option value="90S">90°ショートEL</option></select></label>
+</div>
+
+<div class="res" id="mcR">条件を入力してください</div>
+</section><section id="cutel_simple" class="card tool"><h2>カットエルボ</h2>
+<div class="note">口径・LR/SR・仕上がり角度だけで計算します。</div>
+<div class="grid">
+<label>口径<select id="csSize"><option>50</option><option>65</option><option>80</option><option selected>100</option><option>125</option><option>150</option></select></label>
+<label>種類<select id="csType"><option value="LR">LR</option><option value="SR">SR</option></select></label>
+<label>仕上がり角度 (°)<input id="csAng" type="number" value="59" min="0.1" max="90" step="any"></label>
+</div>
+<button class="calc" id="csBtn" type="button">計算</button>
+<div class="res" id="csR">条件を入力して「計算」を押してください</div>
+<div class="note">引き寸 = R×tan(θ/2)。上・下は元90°端面から、外R側・内R側の表面に沿って切断位置までの長さです。</div>
+</section></main>
+<script>const mcSize=document.getElementById('mcSize');const mcH=document.getElementById('mcH');const mcV=document.getElementById('mcV');const mcD=document.getElementById('mcD');const mcCC=document.getElementById('mcCC');const mcStart=document.getElementById('mcStart');const mcEnd=document.getElementById('mcEnd');const mcR=document.getElementById('mcR');const E=id=>document.getElementById(id);
+const acc=E('acc');
+const adj=E('adj');
+const aen=E('aen');
+const ast=E('ast');
+const asz=E('asz');
+const autoCut=E('autoCut');
+const autoCutR=E('autoCutR');
+const cc=E('cc');
+const circleMarkR=E('circleMarkR');
+const circlemark=E('circlemark');
+const clr=E('clr');
+const cmA=E('cmA');
+const cmD=E('cmD');
+const cmN=E('cmN');
+const cmPi=E('cmPi');
+const cmPreset=E('cmPreset');
+const cut=E('cut');
+const cutElR=E('cutElR');
+const cutLenR=E('cutLenR');
+const cutR=E('cutR');
+const cutel=E('cutel');
+const cutlen=E('cutlen');
+const d=E('d');
+const dist=E('dist');
+const h=E('h');
+const kerf=E('kerf');
+const len=E('len');
+const mother=E('mother');
+const needAng=E('needAng');
+const od=E('od');
+const off=E('off');
+const offR=E('offR');
+const pct=E('pct');
+const pfD=E('pfD');
+const pfH=E('pfH');
+const pfR=E('pfR');
+const pfSize=E('pfSize');
+const pfV=E('pfV');
+const pieces=E('pieces');
+const pipe=E('pipe');
+const pipeR=E('pipeR');
+const pipeflow=E('pipeflow');
+const qty=E('qty');
+const rho=E('rho');
+const sl=E('sl');
+const slope=E('slope');
+const slopeR=E('slopeR');
+const steel=E('steel');
+const steelR=E('steelR');
+const stock=E('stock');
+const stockPreset=E('stockPreset');
+const t=E('t');
+const take1=E('take1');
+const take2=E('take2');
+const tee=E('tee');
+const teeCE=E('teeCE');
+const teeEnd=E('teeEnd');
+const teeKey=E('teeKey');
+const teeR=E('teeR');
+const th=E('th');
+const top=E('top');
+const v=E('v');
+const w=E('w');
+document.addEventListener('click',function(e){
+ const b=e.target.closest('button');
+ if(!b)return;
+ if(b.dataset.angle){cmA.value=b.dataset.angle;calcCircleMark();return}
+ if(b.dataset.stock){stock.value=b.dataset.stock;return}
+ const fn=b.dataset.calc;
+ if(fn && typeof window[fn]==='function'){window[fn]();}
+});
+const val=x=>Number(E(x).value);function calcOffset(){let H=val('h'),V=val('v'),D=val('d'),p=Math.hypot(H,D),L=Math.hypot(H,V,D),a=Math.atan2(V,p)*180/Math.PI,b=Math.atan2(D,H)*180/Math.PI;offR.innerHTML=`実長 <b>${L.toFixed(1)} mm</b><br>平面距離 ${p.toFixed(1)} mm<br>上下角 ${a.toFixed(1)}°<br>平面角 ${b.toFixed(1)}°`}function calcSlope(){let d=val('dist'),p=val('pct');if(!(d>0)||!Number.isFinite(p)){slopeR.textContent='入力値を確認してください';return}slopeR.innerHTML=`高低差 <b>${(d*p/100).toFixed(1)} mm</b><br>${p?`比率 1 : ${(100/p).toFixed(2)}`:'比率 —'}`}function calcPipe(){let O=val('od')/1000,T=val('th')/1000,L=val('len'),r=val('rho'),I=O-2*T;if(!O||!L||T<0||I<0){pipeR.textContent='入力値を確認してください';return}let kg=Math.PI/4*(O*O-I*I)*L*r;pipeR.innerHTML=`重量 <b>${kg.toFixed(2)} kg</b><br>1mあたり ${(kg/L).toFixed(2)} kg/m`}function calcSteel(){let W=val('w'),T=val('t'),L=val('sl'),Q=val('qty');if(!(W>0&&T>0&&L>0&&Q>0)){steelR.textContent='入力値を確認してください';return}let kg=W*T*L*Q*7.85e-6;steelR.innerHTML=`合計重量 <b>${kg.toFixed(2)} kg</b>`}function calcCut(){let S=val('stock'),K=val('kerf'),a=pieces.value.replace(/、/g,',').split(',').map(Number).filter(x=>x>0).sort((a,b)=>b-a);if(!(S>0)||K<0||!a.length){cutR.textContent='入力値を確認してください';return}if(a.some(x=>x+K>S)){cutR.textContent='定尺より長い切寸があります';return}let bins=[];for(let x of a){let need=x+K,best=-1,left=Infinity;bins.forEach((b,i)=>{let used=b.reduce((q,z)=>q+z+K,0),rem=S-used;if(rem>=need&&rem-need<left){left=rem-need;best=i}});best<0?bins.push([x]):bins[best].push(x)}let waste=bins.reduce((sum,b)=>sum+S-b.reduce((q,z)=>q+z+K,0),0);cutR.innerHTML=`必要定尺 <b>${bins.length}本</b><br>端材合計 <b>${waste.toFixed(1)} mm</b><br>`+bins.map((b,i)=>{let used=b.reduce((q,z)=>q+z+K,0);return `${i+1}本目：${b.join(' + ')} ／ 使用 ${used.toFixed(1)} mm ／ 端材 ${(S-used).toFixed(1)} mm`}).join('<br>')}
+function calcCutLen(){let C=val('cc'),A=val('take1'),B=val('take2'),J=val('adj'),L=C-A-B+J;if(!(C>0)||A<0||B<0||!Number.isFinite(J)||L<=0){cutLenR.textContent='寸法を確認してください';return}cutLenR.innerHTML=`直管切り寸 <b>${L.toFixed(1)} mm</b><br>${C.toFixed(1)} − ${A.toFixed(1)} − ${B.toFixed(1)} ${J>=0?'+':'−'} ${Math.abs(J).toFixed(1)}`}
+const APP_TAKE={
+50:{"90L":76.2,"90S":50.8},
+65:{"90L":95.3,"90S":63.5},
+80:{"90L":114.3,"90S":76.2},
+100:{"90L":152.4,"90S":101.6},
+125:{"90L":190.5,"90S":127.0},
+150:{"90L":228.6,"90S":152.4}
+};
+function appTake(size,type){if(type==="FL")return 5;let d=APP_TAKE[size];return d&&Number.isFinite(d[type])?d[type]:null}
+function calcAutoCut(){let C=val('acc'),S=Number(asz.value),A=appTake(S,ast.value),B=appTake(S,aen.value);if(!(C>0)||A==null||B==null){autoCutR.textContent='JIS寸法マスター未登録／入力値を確認してください';return}let L=C-A-B;if(L<=0){autoCutR.textContent='引き寸が芯芯以上です';return}autoCutR.innerHTML=`切り寸 <b>${L.toFixed(1)} mm</b><br>根拠：${C.toFixed(1)} − ${A.toFixed(1)} − ${B.toFixed(1)}`}
+const TEE_M={"100x50":95.3};
+function calcTee(){let C=val('teeCE'),M=TEE_M[teeKey.value],E=teeEnd.value==="FL"?5:0;if(!(C>0)||M==null){teeR.textContent='JIS寸法マスター未登録／入力値を確認してください';return}let L=C-M-E;if(L<=0){teeR.textContent='寸法を確認してください';return}teeR.innerHTML=`枝管切り寸 <b>${L.toFixed(1)} mm</b><br>根拠：${C.toFixed(1)} − M ${M.toFixed(1)} − ${E.toFixed(1)}`}
+function calcCutEl(){let M=Number(mother.value),A=val('needAng'),R=val('clr');if(!(A>0&&R>0&&A<=M)){cutElR.textContent='必要角度は母材角以下で入力してください';return}let keep=R*A*Math.PI/180,drop=R*(M-A)*Math.PI/180;cutElR.innerHTML=`残す中心線弧長 <b>${keep.toFixed(1)} mm</b><br>切落し中心線長 <b>${drop.toFixed(1)} mm</b><br>母材 ${M}° → 仕上り ${A.toFixed(1)}°`}
+
+function calcCircleMark(){let D=val('cmD'),N=val('cmN'),A=val('cmA'),P=Number(cmPi.value);
+if(!(D>0&&N>=1&&Number.isInteger(N)&&A>=0&&A<=360)){circleMarkR.textContent='入力値を確認してください';return}
+let C=D*P,div=C/N,per=C/360,pos=C*A/360;
+circleMarkR.innerHTML=`円周 <b>${C.toFixed(2)} mm</b><br>${N}等分ピッチ <b>${div.toFixed(2)} mm</b><br>1°あたり ${per.toFixed(3)} mm/°<br>${A.toFixed(1)}°位置 <b>${pos.toFixed(2)} mm</b><br><span style="font-size:13px">基準線から円周方向へ ${pos.toFixed(2)} mm で ${A.toFixed(1)}°</span>`}
+
+function calcPipeFlow(){
+ let H=val('pfH'),V=val('pfV'),D=val('pfD'),S=Number(pfSize.value);
+ if(![H,V,D].every(Number.isFinite)||Math.hypot(H,V,D)<=0){pfR.textContent='寸法を確認してください';return}
+ let plan=Math.hypot(H,D),travel=Math.hypot(H,V,D);
+ let elev=Math.atan2(Math.abs(V),plan)*180/Math.PI;
+ let planAng=Math.atan2(Math.abs(D),Math.abs(H))*180/Math.PI;
+ let F=(typeof APP_TAKE!=='undefined'&&APP_TAKE[S])?APP_TAKE[S]["90L"]:null;
+ let cut=F==null?'未登録':(F*Math.tan(elev*Math.PI/360)).toFixed(1)+' mm';
+ pfR.innerHTML=`実長 <b>${travel.toFixed(1)} mm</b><br>平面距離 ${plan.toFixed(1)} mm<br>上下角 <b>${elev.toFixed(1)}°</b><br>平面角 ${planAng.toFixed(1)}°<br>${S}A LR90 EL 芯〜端面 ${F==null?'未登録':F.toFixed(1)+' mm'}<br>角度マーキング基礎値 F×tan(θ/2) <b>${cut}</b>`;
+}
+
+function calcMaster(){
+ let S=Number(mcSize.value),H=Number(mcH.value),V=Number(mcV.value),D=Number(mcD.value),C=Number(mcCC.value);
+ if(![H,V,D,C].every(Number.isFinite)||C<=0||Math.hypot(H,V,D)<=0){mcR.textContent='入力値を確認してください';return}
+ let plan=Math.hypot(H,D),travel=Math.hypot(H,V,D);
+ let elev=Math.atan2(Math.abs(V),plan)*180/Math.PI;
+ let planAng=Math.atan2(Math.abs(D),Math.abs(H))*180/Math.PI;
+ let A=appTake(S,mcStart.value),B=appTake(S,mcEnd.value);
+ if(A==null||B==null){mcR.textContent='この口径・継手寸法は未登録です';return}
+ let straight=C-A-B;
+ let F=APP_TAKE[S]["90L"];
+ let mark=F*Math.tan(elev*Math.PI/360);
+ mcR.innerHTML=`実長 <b>${travel.toFixed(1)} mm</b><br>上下角 <b>${elev.toFixed(1)}°</b> ／ 平面角 ${planAng.toFixed(1)}°<br>始点引き ${A.toFixed(1)} mm ／ 終点引き ${B.toFixed(1)} mm<br>直管切り寸 <b>${straight.toFixed(1)} mm</b><br>${S}A LR90 EL F=${F.toFixed(1)} mm<br>F×tan(θ/2) <b>${mark.toFixed(1)} mm</b>`;
+}
+
+(function(){
+ const size=document.getElementById('csSize');
+ const type=document.getElementById('csType');
+ const ang=document.getElementById('csAng');
+ const btn=document.getElementById('csBtn');
+ const out=document.getElementById('csR');
+ const OD={50:60.5,65:76.3,80:89.1,100:114.3,125:139.8,150:165.2};
+ const LR={50:76.2,65:95.3,80:114.3,100:152.4,125:190.5,150:228.6};
+ function run(){
+   const n=Number(size.value), a=Number(ang.value), od=OD[n];
+   const r0=LR[n], R=type.value==='LR'?r0:r0/1.5;
+   if(!(R>0&&od>0&&a>0&&a<=90)){out.textContent='入力値を確認してください';return;}
+   const rad=Math.PI/180, take=R*Math.tan((a/2)*rad), cut=(90-a)*rad;
+   const top=(R+od/2)*cut, bottom=(R-od/2)*cut;
+   out.innerHTML='引き寸 <b>'+take.toFixed(1)+' mm</b><br>上側（外R） <b>'+top.toFixed(1)+' mm</b><br>下側（内R） <b>'+bottom.toFixed(1)+' mm</b>';
+ }
+ btn.addEventListener('click',run);
+})();
+</script><div style="display:none;max-width:640px;margin:16px auto;padding:14px;border:1px dashed #c7cdd5;border-radius:14px;text-align:center;color:#7a838d;font:14px -apple-system,BlinkMacSystemFont,sans-serif">広告スペース（正式広告導入予定）</div><section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7"><h2 style="font-size:19px">使い方と確認ポイント</h2><p>現場寸法を入力して計算し、表示された単位と計算条件を確認してください。製作・施工に使用する場合は、図面、適用規格、メーカー寸法、現場条件を優先して最終確認してください。</p><p>HAIKAN CALCでは、結果だけでなく途中の寸法や倍率も表示し、現場で検算しやすい計算ツールを目指しています。</p></section><div style="max-width:640px;margin:16px auto;background:#fff;padding:16px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif"><b>関連する現場計算</b><br><a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="rolling-offset.html">3方向の振り・逃げ（ローリングオフセット）</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="slope.html">配管勾配・高低差</a> ｜ <a href="sgp-weight.html">SGP重量・保有水量</a></div>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">次に使える関連計算</h2>
+<p><a href="rolling-offset.html">3方向の振り・逃げ（ローリングオフセット）</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="offset.html">逃げ寸法（オフセット）</a></p>
+<p style="color:#5f6873;font-size:14px">同じ製作・施工の流れで使う計算へそのまま移動できます。</p>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">現場で使う前の確認</h2>
+<ul style="padding-left:20px">
+<li>図面・現場寸法・適用規格を最優先してください。</li>
+<li>メーカーや継手形式で寸法が変わる場合は実寸・メーカー値を使用してください。</li>
+<li>計算結果は途中値も見て、単位と入力条件を確認してください。</li>
+</ul>
+</section>
+
+<section data-strong-page-v3="1" style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style='font-size:19px;margin-top:0'>使用例</h2><p>100A・LR・仕上がり59°なら、引き寸 <b>86.2mm</b>、外R側 <b>113.4mm</b>、内R側 <b>51.5mm</b> が目安です。</p><h2 style='font-size:19px'>いつ使う？</h2><p>既製の90°エルボを現場の振り角度に合わせてカットして使う時のマーキング確認に使います。</p>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">よくある質問</h2>
+<details><summary><b>LRとSRで結果は変わる？</b></summary><p>曲げ半径Rが異なるため変わります。使用する継手の実寸・メーカー寸法を最終確認してください。</p></details>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">関連計算</h2>
+<p><a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="rolling-offset.html">3方向の振り・逃げ</a> ｜ <a href="cut-length.html">芯々から切り寸</a></p>
+</section>
+
+
+<section data-strong-v5="cut-el" style="max-width:720px;margin:16px auto;background:#fff;padding:18px;border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;line-height:1.8">
+<h2 style="margin-top:0;font-size:20px">カットエルボで何が分かる？</h2>
+<p>90°エルボを希望角度に切るときの、<b>引き寸</b>と<b>外R側・内R側の切断位置</b>を確認できます。現場で角度振りを作る前の検算や、罫書き寸法の確認用に使えます。</p>
+<h3 style="font-size:17px">計算の基本</h3>
+<p><b>引き寸 = R × tan(θ / 2)</b></p>
+<p>Rはエルボの中心半径、θは仕上がり角度です。LRとSRではRが違うため、同じ角度でも引き寸が変わります。</p>
+<h3 style="font-size:17px">使用例</h3>
+<p>100A・LR・仕上がり59°の場合、引き寸は<b>86.2mm</b>。外R側・内R側のマーキング位置も同時に確認できます。</p>
+<h3 style="font-size:17px">よくある間違い</h3>
+<ul><li>LRとSRを取り違える</li><li>角度を「残す角度」と「切る角度」で取り違える</li><li>メーカー・実物寸法を確認せず、そのまま加工する</li></ul>
+<p style="font-size:13px;color:#667">最終加工前は、使用する継手の実寸・規格・メーカー寸法を優先してください。</p>
+</section>
+<section style="max-width:720px;margin:16px auto;background:#fff;padding:18px;border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif;line-height:1.8">
+<h2 style="margin-top:0;font-size:20px">次に使う計算</h2>
+<p><a href="offset.html">配管の逃げ寸法（オフセット）</a> ｜ <a href="rolling-offset.html">3方向の振り・逃げ</a> ｜ <a href="cut-length.html">芯々から切り寸</a></p>
+</section>
+
+<p style="max-width:760px;margin:16px auto;padding:0 16px"><a href="pipe-circumference.html">配管円周・等分ピッチ</a></p>
+<div class="hc-ad-slot" data-ad-slot="content">
+  <strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+
+</body></html>

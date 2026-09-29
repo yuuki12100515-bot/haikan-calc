@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>タンク・配管の充填時間計算｜容量と流量から時間を計算｜HAIKAN CALC</title>
+<meta content="タンクや配管の容量と流量から充填時間を無料計算。L/min・m3/h対応。必要流量の逆算や、配管内径と長さから容量自動計算もできます。" name="description"/>
+<link href="https://haikan-calc.netlify.app/fill-time.html" rel="canonical"/>
+<style>
+:root{--bg:#f4f6f8;--ink:#17202a;--sub:#66707a;--blue:#1677ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0000000c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:14px;font-weight:800}input,select,button{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
+button{background:var(--blue);color:#fff;border:0;font-weight:900}
+.result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
+.note{font-size:13px;color:var(--sub);line-height:1.7}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}
+@media(max-width:620px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"タンク・配管の充填時間計算","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
+</head><body>
+<nav aria-label="HAIKAN CALC" class="hc-mini-nav">
+<a href="index.html">トップ</a>
+<a href="cut-length.html">切り寸</a>
+<a href="cut-el.html">カットEL</a>
+<a href="offset.html">逃げ</a>
+<a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<header><div class="wrap"><h1>タンク・配管の充填時間</h1><p>容量と流量から、満たすまでの時間を計算。</p></div></header>
+<main class="wrap"><p><a href="index.html">← HAIKAN CALC トップ</a></p>
+<section class="card">
+<h2>容量 → 充填時間</h2>
+<div class="grid">
+<label>容量 (L)<input id="vol" step="0.1" type="number" value="1000"/></label>
+<label>流量<input id="q" step="0.1" type="number" value="100"/></label>
+<label>流量単位<select id="unit"><option value="lmin">L/min</option><option value="m3h">m³/h</option></select></label>
+</div>
+<button id="calc">時間を計算</button><div class="result" id="res"></div>
+</section>
+<section class="card">
+<h2>配管の容量から計算</h2>
+<div class="grid">
+<label>管内径 ID (mm)<input id="idmm" step="0.1" type="number" value="100"/></label>
+<label>配管長さ (m)<input id="lenm" step="0.1" type="number" value="50"/></label>
+<label>流量<input id="pq" step="0.1" type="number" value="200"/></label>
+<label>流量単位<select id="punit"><option value="lmin">L/min</option><option value="m3h">m³/h</option></select></label>
+</div>
+<button id="pcalc">配管充填時間を計算</button><div class="result" id="pres"></div>
+</section>
+<section class="card">
+<h2>必要流量を逆算</h2>
+<div class="grid">
+<label>容量 (L)<input id="rvol" step="0.1" type="number" value="1000"/></label>
+<label>目標時間 (分)<input id="mins" step="0.1" type="number" value="10"/></label>
+</div>
+<button id="rcalc">必要流量を計算</button><div class="result" id="rres"></div>
+</section>
+<section class="card"><h2>計算式</h2>
+<p><b>充填時間 = 容量 ÷ 流量</b></p>
+<p class="note">実際はポンプ性能、圧力損失、弁開度、液面差などで流量が変わります。この計算は一定流量とした目安です。</p>
+</section>
+<section class="card"><h2>使用例</h2><p>1000Lを100L/minで満たすと、理論上の充填時間は<b>10分</b>です。</p></section>
+<section class="card"><h2>関連計算</h2><div class="links"><a href="pipe-volume.html">配管内容積・充水量</a><a href="flow-velocity.html">配管の流量・流速</a><a href="water-head-pressure.html">水頭・圧力換算</a></div></section>
+<section class="card hc-seo-info"><h2>充填時間計算の使い方</h2><p>タンクや配管へ一定流量で液体を入れる場合、容量を流量で割ると理論上の充填時間を求められます。実際にはポンプ能力の変化、バルブ開度、背圧などで流量が一定にならないことがあります。作業時間を見積もる際は計算値を基準にしつつ、実測流量と安全余裕を加えて判断してください。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function lpm(q,u){return u==='lmin'?q:q*1000/60}
+function fmtMin(m){let h=Math.floor(m/60),min=m-h*60;return h>0?h+'時間 '+min.toFixed(1)+'分':m.toFixed(2)+'分'}
+function pipeL(dmm,lenm){let d=dmm/1000;return Math.PI*d*d/4*lenm*1000}
+$('calc').onclick=()=>{let v=+$('vol').value,q=+$('q').value,u=$('unit').value;if(!(v>=0&&q>0))return $('res').textContent='入力値を確認してください';let m=v/lpm(q,u);$('res').innerHTML='<span class="big">充填時間 <b>'+fmtMin(m)+'</b></span><br>'+m.toFixed(2)+' 分 / '+(m/60).toFixed(3)+' 時間';}
+$('pcalc').onclick=()=>{let d=+$('idmm').value,l=+$('lenm').value,q=+$('pq').value,u=$('punit').value;if(!(d>0&&l>=0&&q>0))return $('pres').textContent='入力値を確認してください';let v=pipeL(d,l),m=v/lpm(q,u);$('pres').innerHTML='<span class="big">配管充填時間 <b>'+fmtMin(m)+'</b></span><br>配管内容積 '+v.toFixed(2)+' L';}
+$('rcalc').onclick=()=>{let v=+$('rvol').value,m=+$('mins').value;if(!(v>=0&&m>0))return $('rres').textContent='入力値を確認してください';let q=v/m;$('rres').innerHTML='<span class="big">必要流量 <b>'+q.toFixed(2)+' L/min</b></span><br>'+(q*0.06).toFixed(3)+' m³/h';}
+$('calc').click();$('pcalc').click();$('rcalc').click();
+</script>
+<section class="field-guide"><h2>現場での確認ポイント</h2><p>配管充填では、最初のエア抜きや末端ベントの状態で実際の充填時間が変わります。理論時間だけで作業計画を固定せず、試運転時の実測流量と合わせて確認してください。</p></section><div class="hc-ad-slot" data-ad-slot="content">
+<strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+</body></html>

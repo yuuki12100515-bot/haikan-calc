@@ -1,0 +1,60 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SGP重量・保有水量｜満水重量も計算｜HAIKAN CALC</title><meta name="description" content="SGP配管の呼び径と長さから管重量、内径、保有水量、水重量、満水重量を無料計算。">
+<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#17202a}.w{max-width:620px;margin:auto}.c{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px #0001}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-weight:700;font-size:14px}input,select,button{width:100%;box-sizing:border-box;font-size:18px;padding:14px;border-radius:12px;border:1px solid #ccd1d5;margin-top:6px}button{background:#1677ff;color:#fff;border:0;font-weight:800;margin-top:18px}.r{margin-top:16px;background:#eef5ff;padding:16px;border-radius:14px;line-height:1.9}.hero{font-size:24px}.n{font-size:13px;color:#586069;margin-top:12px}@media(max-width:480px){.g{grid-template-columns:1fr}}</style><link rel="canonical" href="https://haikan-calc.netlify.app/sgp-weight.html"></head>
+<body>
+
+<nav class="hc-mini-nav" aria-label="HAIKAN CALC">
+  <a href="index.html">トップ</a>
+  <a href="cut-length.html">切り寸</a>
+  <a href="cut-el.html">カットEL</a>
+  <a href="offset.html">逃げ</a>
+  <a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<div style="max-width:640px;margin:0 auto 12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+<a href="index.html" style="text-decoration:none;font-weight:800;color:#1677ff">← HAIKAN CALC トップ</a>
+</div><div class="w"><div class="c"><h1>SGP 配管重量・保有水量</h1><p>呼び径と長さから、管重量・保有水量・満水重量まで一発計算。</p>
+<div class="g"><label>呼び径<select id="size"><option value="15">15A</option><option value="20">20A</option><option value="25">25A</option><option value="32">32A</option><option value="40">40A</option><option value="50">50A</option><option value="65">65A</option><option value="80">80A</option><option value="90">90A</option><option value="100" selected>100A</option><option value="125">125A</option><option value="150">150A</option><option value="200">200A</option><option value="250">250A</option><option value="300">300A</option><option value="350">350A</option><option value="400">400A</option><option value="450">450A</option><option value="500">500A</option></select></label><label>長さ (m)<input id="len" type="number" value="5.5" min="0.001" step="any"></label></div>
+<button id="go">計算する</button><div id="out" class="r">条件を入力してください</div>
+<div class="n">SGP（JIS G 3452）の外径・厚さ・単位質量を使用。内径＝外径−2×厚さ。保有水量は内径から算出し、水1L＝1kgとして満水重量を計算します。実設計では許容差・流体密度・継手重量等を別途考慮してください。</div></div></div>
+<script>(function(){const D={15:[21.7,2.8,1.31],20:[27.2,2.8,1.68],25:[34.0,3.2,2.43],32:[42.7,3.5,3.38],40:[48.6,3.5,3.89],50:[60.5,3.8,5.31],65:[76.3,4.2,7.47],80:[89.1,4.2,8.79],90:[101.6,4.2,10.1],100:[114.3,4.5,12.2],125:[139.8,4.5,15.0],150:[165.2,5.0,19.8],200:[216.3,5.8,30.1],250:[267.4,6.6,42.4],300:[318.5,6.9,53.0],350:[355.6,7.9,67.7],400:[406.4,7.9,77.6],450:[457.2,7.9,87.5],500:[508.0,7.9,97.4]},q=x=>document.getElementById(x);q('go').onclick=function(){let s=Number(q('size').value),L=Number(q('len').value),d=D[s];if(!d||!(L>0)){q('out').textContent='入力値を確認してください';return}let od=d[0],t=d[1],kgm=d[2],id=od-2*t,lpm=Math.PI*id*id/4/1000,pipe=kgm*L,water=lpm*L,total=pipe+water;q('out').innerHTML='<span class="hero">満水重量 <b>'+total.toFixed(2)+' kg</b></span><br>管重量 <b>'+pipe.toFixed(2)+' kg</b><br>保有水量 <b>'+water.toFixed(2)+' L</b><br>水重量 '+water.toFixed(2)+' kg<br><hr>外径 '+od.toFixed(1)+' mm<br>厚さ '+t.toFixed(1)+' mm<br>内径 '+id.toFixed(1)+' mm<br>管単位質量 '+kgm.toFixed(2)+' kg/m<br>保有水量 '+lpm.toFixed(3)+' L/m<br>満水単位重量 '+(kgm+lpm).toFixed(3)+' kg/m';}})();</script><div style="max-width:640px;margin:16px auto;padding:14px;border:1px dashed #c7cdd5;border-radius:14px;text-align:center;color:#7a838d;font:14px -apple-system,BlinkMacSystemFont,sans-serif">広告スペース（正式広告導入予定）</div><section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7"><h2 style="font-size:19px">使い方と確認ポイント</h2><p>現場寸法を入力して計算し、表示された単位と計算条件を確認してください。製作・施工に使用する場合は、図面、適用規格、メーカー寸法、現場条件を優先して最終確認してください。</p><p>HAIKAN CALCでは、結果だけでなく途中の寸法や倍率も表示し、現場で検算しやすい計算ツールを目指しています。</p></section><div style="max-width:640px;margin:16px auto;background:#fff;padding:16px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif"><b>関連する現場計算</b><br><a href="offset.html">逃げ寸法（オフセット）</a> ｜ <a href="rolling-offset.html">3方向の振り・逃げ（ローリングオフセット）</a> ｜ <a href="cut-length.html">芯々から切り寸</a> ｜ <a href="slope.html">配管勾配・高低差</a> ｜ <a href="sgp-weight.html">SGP重量・保有水量</a></div>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">次に使える関連計算</h2>
+<p><a href="cut-length.html">芯々から切り寸</a> ｜ <a href="slope.html">配管勾配・高低差</a> ｜ <a href="tools.html">現場用品・治具</a></p>
+<p style="color:#5f6873;font-size:14px">同じ製作・施工の流れで使う計算へそのまま移動できます。</p>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">現場で使う前の確認</h2>
+<ul style="padding-left:20px">
+<li>図面・現場寸法・適用規格を最優先してください。</li>
+<li>メーカーや継手形式で寸法が変わる場合は実寸・メーカー値を使用してください。</li>
+<li>計算結果は途中値も見て、単位と入力条件を確認してください。</li>
+</ul>
+</section>
+
+<section data-strong-page-v3="1" style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style='font-size:19px;margin-top:0'>使用例</h2><p>100A・5.5mなら、管重量 <b>67.10kg</b>、保有水量 <b>47.90L</b>、満水重量 <b>115.00kg</b> が目安です。</p><h2 style='font-size:19px'>いつ使う？</h2><p>配管を持ち上げる前の重量確認、支持やサポート検討の参考、満水時の荷重感を把握したい時に使います。</p>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">よくある質問</h2>
+<details><summary><b>水1Lは何kgで計算？</b></summary><p>この計算では1L＝約1kgとして満水重量を出しています。</p></details><details><summary><b>継手やバルブ重量も入っている？</b></summary><p>入っていません。直管本体と管内の水だけです。</p></details>
+</section>
+<section style="max-width:640px;margin:16px auto;background:#fff;padding:18px;border-radius:14px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75">
+<h2 style="font-size:19px;margin-top:0">関連計算</h2>
+<p><a href="cut-length.html">芯々から切り寸</a> ｜ <a href="slope.html">配管勾配・高低差</a> ｜ <a href="tools.html">現場用品・治具</a></p>
+</section>
+
+
+<div class="hc-ad-slot" data-ad-slot="content">
+  <strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+
+
+<section class="card hc-seo-info"><h2>SGP配管重量を確認するとき</h2><p>配管の吊り込み、サポート検討、搬入時の目安には管自重だけでなく、内部の水重量も確認すると安全側の判断に役立ちます。この計算はSGPの代表寸法を使って管重量と保有水量を求めるための簡易ツールです。実際の設計荷重ではバルブ、フランジ、継手、保温材などの重量も別途加算してください。</p></section>
+</body></html>

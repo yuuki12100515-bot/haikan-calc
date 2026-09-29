@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>フランジボルト穴割付計算｜PCD・穴数から弦長と角度｜HAIKAN CALC</title>
+<meta content="フランジのPCDとボルト穴数から、隣接穴の弦長・円弧ピッチ・等分角度を無料計算。ボルト穴の罫書き・確認に使えます。" name="description"/>
+<link href="https://haikan-calc.netlify.app/flange-hole-layout.html" rel="canonical"/>
+<style>
+:root{--bg:#f4f6f8;--ink:#17202a;--sub:#66707a;--blue:#1677ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0000000c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:14px;font-weight:800}input,select,button{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
+button{background:var(--blue);color:#fff;border:0;font-weight:900}
+.result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
+.note{font-size:13px;color:var(--sub);line-height:1.7}.warn{background:#fff7ea;border:1px solid #ffd9a4;border-radius:12px;padding:12px;color:#7c4700}
+.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}
+table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border-bottom:1px solid #e6eaee;padding:8px;text-align:right}th:first-child,td:first-child{text-align:left}
+@media(max-width:620px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"フランジボルト穴割付計算","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
+</head><body>
+<nav aria-label="HAIKAN CALC" class="hc-mini-nav">
+<a href="index.html">トップ</a>
+<a href="cut-length.html">切り寸</a>
+<a href="cut-el.html">カットEL</a>
+<a href="offset.html">逃げ</a>
+<a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<header><div class="wrap"><h1>フランジボルト穴割付</h1><p>PCDと穴数から、弦長・円弧ピッチ・等分角度を計算。</p></div></header>
+<main class="wrap"><p><a href="index.html">← HAIKAN CALC トップ</a></p>
+<section class="card"><h2>入力</h2>
+<div class="grid">
+<label>PCD (mm)<input id="pcd" step="0.1" type="number" value="180"/></label>
+<label>ボルト穴数<input id="n" min="2" step="1" type="number" value="8"/></label>
+<label>開始角度 (°)<input id="start" step="0.1" type="number" value="0"/></label>
+</div>
+<button id="calc">割付を計算</button><div class="result" id="res"></div>
+</section>
+<section class="card"><h2>穴中心の座標</h2>
+<div id="tbl"></div>
+</section>
+<section class="card"><h2>計算式</h2>
+<p><b>等分角度 = 360° ÷ 穴数</b></p>
+<p><b>隣接穴の弦長 = 2R × sin(π ÷ 穴数)</b></p>
+<p><b>円弧ピッチ = π × PCD ÷ 穴数</b></p>
+<p class="note">PCDはPitch Circle Diameter、R=PCD/2です。</p>
+</section>
+<section class="card"><h2>使用例</h2>
+<p>PCD180mm・8穴なら、等分角度は<b>45°</b>、隣接穴の弦長は約<b>68.9mm</b>です。</p></section>
+<section class="card"><div class="warn"><b>このページは幾何計算です。</b> JISのPCD・穴径・穴数そのものを決めるページではありません。使用フランジの規格値を入力してください。</div></section>
+<section class="card"><h2>関連計算</h2><div class="links"><a href="pipe-circumference.html">配管円周・等分ピッチ</a><a href="cut-length.html">芯々から切り寸</a><a href="surface-area.html">配管表面積</a></div></section>
+<section class="card hc-seo-info"><h2>フランジ穴割付の確認</h2><p>PCDとボルト穴数から、隣り合う穴の中心角と弦長を確認できます。現場で穴位置を確認するときは、フランジの向きや振り分け基準も合わせて確認してください。JISなどの規格フランジを製作・選定する場合は、この簡易計算だけで決めず、該当する規格表の寸法と照合してください。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+$('calc').onclick=()=>{
+ let pcd=+$('pcd').value,n=Math.floor(+$('n').value),start=+$('start').value;
+ if(!(pcd>0&&n>=2&&Number.isFinite(start)))return $('res').textContent='入力値を確認してください';
+ let R=pcd/2,a=360/n,ch=2*R*Math.sin(Math.PI/n),arc=Math.PI*pcd/n;
+ $('res').innerHTML='<span class="big">隣接穴の弦長 <b>'+ch.toFixed(2)+' mm</b></span><br>円弧ピッチ '+arc.toFixed(2)+' mm<br>等分角度 '+a.toFixed(2)+'°';
+ let rows='<table><tr><th>穴No.</th><th>角度</th><th>X mm</th><th>Y mm</th></tr>';
+ let max=Math.min(n,24);
+ for(let i=0;i<max;i++){
+   let deg=start+i*a,rad=deg*Math.PI/180,x=R*Math.cos(rad),y=R*Math.sin(rad);
+   rows+='<tr><td>'+(i+1)+'</td><td>'+deg.toFixed(2)+'°</td><td>'+x.toFixed(2)+'</td><td>'+y.toFixed(2)+'</td></tr>';
+ }
+ rows+='</table>';
+ if(n>24) rows+='<p class="note">座標表示は先頭24穴までです。</p>';
+ $('tbl').innerHTML=rows;
+}
+$('calc').click();
+</script>
+<section class="field-guide"><h2>現場での確認ポイント</h2><p>穴位置を罫書く時は、フランジの基準方向とボルト穴の振り分けを先に決めてから割付します。相手フランジとの向き、ガスケット、機器ノズルの基準も合わせて確認してください。</p></section><div class="hc-ad-slot" data-ad-slot="content">
+<strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+</body></html>

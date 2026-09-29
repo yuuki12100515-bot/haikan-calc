@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>直管の簡易圧力損失計算｜Darcy-Weisbach｜HAIKAN CALC</title>
+<meta content="配管内径・長さ・流量・摩擦係数から直管の圧力損失を無料計算。Darcy-Weisbach式でkPa・mH2Oを表示。" name="description"/>
+<link href="https://haikan-calc.netlify.app/pressure-loss.html" rel="canonical"/>
+<style>
+:root{--bg:#f4f6f8;--ink:#17202a;--sub:#66707a;--blue:#1677ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0000000c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:14px;font-weight:800}input,select,button{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
+button{background:var(--blue);color:#fff;border:0;font-weight:900}
+.result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
+.note{font-size:13px;color:var(--sub);line-height:1.7}.warn{background:#fff7ea;border:1px solid #ffd9a4;border-radius:12px;padding:12px;color:#7c4700}
+.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}
+@media(max-width:620px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"直管の簡易圧力損失計算","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
+</head><body>
+<nav aria-label="HAIKAN CALC" class="hc-mini-nav">
+<a href="index.html">トップ</a>
+<a href="cut-length.html">切り寸</a>
+<a href="cut-el.html">カットEL</a>
+<a href="offset.html">逃げ</a>
+<a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<header><div class="wrap"><h1>直管の簡易圧力損失</h1><p>Darcy-Weisbach式で、直管部分の損失を計算。</p></div></header>
+<main class="wrap"><p><a href="index.html">← HAIKAN CALC トップ</a></p>
+<section class="card"><h2>入力</h2>
+<div class="grid">
+<label>管内径 ID (mm)<input id="d" step="0.1" type="number" value="50"/></label>
+<label>直管長さ (m)<input id="L" step="0.1" type="number" value="100"/></label>
+<label>流量<input id="q" step="0.1" type="number" value="100"/></label>
+<label>流量単位<select id="unit"><option value="lmin">L/min</option><option value="m3h">m³/h</option></select></label>
+<label>密度 ρ (kg/m³)<input id="rho" step="1" type="number" value="1000"/></label>
+<label>Darcy摩擦係数 f<input id="f" step="0.001" type="number" value="0.02"/></label>
+</div>
+<button id="calc">圧力損失を計算</button><div class="result" id="res"></div>
+</section>
+<section class="card"><h2>計算式</h2>
+<p><b>ΔP = f × (L / D) × (ρv² / 2)</b></p>
+<p class="note">このページは直管のみの簡易計算です。エルボ、TEE、バルブ、レジューサなどの局部損失は含みません。</p>
+</section>
+<section class="card"><h2>摩擦係数について</h2>
+<p>初期値は <b>f = 0.02</b> にしていますが、これは固定の正解値ではありません。実際の摩擦係数はReynolds数・管粗さ・流体条件で変わります。</p>
+<div class="warn"><b>設計値としてそのまま使わないでください。</b> 設備設計では使用管・流体・温度・継手損失まで含めて確認してください。</div>
+</section>
+<section class="card"><h2>関連計算</h2><div class="links"><a href="pipe-diameter.html">配管口径の目安</a><a href="flow-velocity.html">流量・流速</a><a href="water-head-pressure.html">水頭・圧力換算</a></div></section>
+<section class="card hc-seo-info"><h2>直管圧力損失の確認</h2><p>Darcy-Weisbach式は、管長、内径、流速、摩擦係数から直管部分の圧力損失を求める基本式です。このページは直管の簡易確認用で、エルボ、TEE、バルブ、レジューサなどの局部損失は別途考える必要があります。実設備では流体物性と管内面状態も結果に影響します。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function qm3s(q,u){return u==='lmin'?q/1000/60:q/3600}
+$('calc').onclick=()=>{let dmm=+$('d').value,L=+$('L').value,q=+$('q').value,u=$('unit').value,rho=+$('rho').value,f=+$('f').value;if(!(dmm>0&&L>=0&&q>=0&&rho>0&&f>0))return $('res').textContent='入力値を確認してください';let D=dmm/1000,Q=qm3s(q,u),A=Math.PI*D*D/4,v=Q/A,dp=f*(L/D)*(rho*v*v/2),kpa=dp/1000,head=dp/(rho*9.80665);$('res').innerHTML='<span class="big">圧力損失 <b>'+kpa.toFixed(2)+' kPa</b></span><br>'+head.toFixed(2)+' mH₂O<br>流速 '+v.toFixed(3)+' m/s';}
+$('calc').click();
+</script><p style="max-width:760px;margin:16px auto;padding:0 16px"><a href="reynolds.html">レイノルズ数・摩擦係数を計算</a> ｜ <a href="pump-head.html">ポンプ必要揚程の簡易計算</a></p>
+<section class="field-guide"><h2>計算結果の扱い</h2><p>Darcy-Weisbach式による直管部の目安です。実設備ではエルボ、TEE、バルブ、レジューサなどの局部損失も加わります。ポンプ選定や重要な設計判断では設計条件と正式な計算方法で再確認してください。</p></section><div class="hc-ad-slot" data-ad-slot="content">
+<strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+</body></html>

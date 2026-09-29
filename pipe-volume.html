@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>配管内容積・充水量計算｜内径と長さからLを計算｜HAIKAN CALC</title>
+<meta content="配管の内径と長さから内容積・充水量を無料計算。L、m3、1mあたり容量を表示。逆算で必要長さも計算できます。" name="description"/>
+<link href="https://haikan-calc.netlify.app/pipe-volume.html" rel="canonical"/>
+<style>
+:root{--bg:#f4f6f8;--ink:#17202a;--sub:#66707a;--blue:#1677ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;margin:auto;padding:16px}header .wrap{padding:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0000000c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:14px;font-weight:800}input,select,button{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
+button{background:var(--blue);color:#fff;border:0;font-weight:900}
+.result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
+.note{font-size:13px;color:var(--sub);line-height:1.7}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}
+@media(max-width:620px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"配管内容積・充水量計算","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
+</head><body>
+<nav aria-label="HAIKAN CALC" class="hc-mini-nav">
+<a href="index.html">トップ</a>
+<a href="cut-length.html">切り寸</a>
+<a href="cut-el.html">カットEL</a>
+<a href="offset.html">逃げ</a>
+<a href="flow-velocity.html">流量</a>
+</nav>
+<style>
+.hc-mini-nav{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow:auto;background:#fff}
+.hc-mini-nav a{white-space:nowrap;text-decoration:none;color:#1768cc;font-weight:800;font-size:14px;padding:8px 10px;border-radius:999px;background:#eef5ff}
+.hc-ad-slot{display:none;max-width:760px;margin:22px auto;padding:14px 16px;border:1px dashed #c7cdd5;border-radius:14px;background:#fff;color:#7a838d;text-align:center;font:13px/1.6 -apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif}
+.hc-ad-slot strong{display:block;color:#59636e;margin-bottom:2px}
+</style>
+<header><div class="wrap"><h1>配管内容積・充水量</h1><p>内径と長さから、管内に入る水量をすぐ計算。</p></div></header>
+<main class="wrap"><p><a href="index.html">← HAIKAN CALC トップ</a></p>
+<section class="card"><h2>内容積を計算</h2>
+<div class="grid">
+<label>管内径 ID (mm)<input id="idmm" step="0.1" type="number" value="100"/></label>
+<label>配管長さ (m)<input id="lenm" step="0.1" type="number" value="10"/></label>
+</div>
+<button id="calc">計算する</button>
+<div class="result" id="res"></div>
+</section>
+<section class="card"><h2>容量から必要長さを逆算</h2>
+<div class="grid">
+<label>管内径 ID (mm)<input id="rid" step="0.1" type="number" value="100"/></label>
+<label>必要容量 (L)<input id="lit" step="0.1" type="number" value="100"/></label>
+</div>
+<button id="rcalc">必要長さを計算</button>
+<div class="result" id="rres"></div>
+</section>
+<section class="card"><h2>計算式</h2>
+<p><b>内容積 = π × (内径 ÷ 2)² × 長さ</b></p>
+<p class="note">mmとmを換算して、L・m³で表示します。水なら1L ≒ 1kgとして、おおよその充水重量の目安にも使えます。</p>
+</section>
+<section class="card"><h2>使用例</h2>
+<p>内径100mm、長さ10mなら、内容積は約<b>78.54L</b>です。</p>
+</section>
+<section class="card"><h2>こんな時に便利</h2>
+<ul><li>水張り・洗浄に必要な水量の確認</li><li>薬液・洗浄液の必要量の概算</li><li>配管内に残る液量の目安</li><li>タンク容量から必要配管長を逆算</li></ul>
+<p class="note">実際の内径は材質・呼び径・肉厚で変わります。製作・設計では実管内径を優先してください。</p>
+</section>
+<section class="card"><h2>関連計算</h2><div class="links"><a href="sgp-weight.html">SGP重量・保有水量</a><a href="flow-velocity.html">流量・流速</a><a href="slope.html">配管勾配・高低差</a></div></section>
+<section class="card hc-seo-info"><h2>配管内容積・充水量の使い方</h2><p>配管の内径と長さから内部容積を求めると、満水時の水量、洗浄や薬液充填に必要な量の概算ができます。長い配管系統では区間ごとに口径と長さを分けて計算し、最後に合計してください。実際の系統容量にはバルブ、タンク、継手などの内部容積が加わる場合があります。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function vol(idmm,lenm){ const d=idmm/1000; return Math.PI*(d*d)/4*lenm; }
+$('calc').onclick=()=>{let d=+$('idmm').value,l=+$('lenm').value;if(!(d>0&&l>=0))return $('res').textContent='入力値を確認してください';let m3=vol(d,l),L=m3*1000,per=vol(d,1)*1000;$('res').innerHTML='<span class="big">内容積 <b>'+L.toFixed(2)+' L</b></span><br>'+m3.toFixed(4)+' m³<br>1mあたり <b>'+per.toFixed(3)+' L/m</b><br>水の場合の重量目安 約 <b>'+L.toFixed(1)+' kg</b>';}
+$('rcalc').onclick=()=>{let d=+$('rid').value,L=+$('lit').value;if(!(d>0&&L>=0))return $('rres').textContent='入力値を確認してください';let per=vol(d,1)*1000,len=L/per;$('rres').innerHTML='<span class="big">必要長さ <b>'+len.toFixed(2)+' m</b></span><br>1mあたり '+per.toFixed(3)+' L/m';}
+$('calc').click();$('rcalc').click();
+</script><p style="max-width:760px;margin:16px auto;padding:0 16px"><a href="fill-time.html">充填時間も計算する</a></p>
+<section class="field-guide"><h2>現場での使い方</h2><p>水張り量、洗浄水量、薬液量の概算では、直管だけでなく機器・バルブ・継手側の保有量も必要に応じて加算します。管内径は呼び径ではなく、肉厚を考慮した実内径を使うと精度が上がります。</p></section><div class="hc-ad-slot" data-ad-slot="content">
+<strong>広告スペース</strong>
+  計算操作から離した位置に広告を配置する想定です。
+</div>
+</body></html>
