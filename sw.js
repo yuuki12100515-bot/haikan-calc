@@ -1,7 +1,7 @@
-const CACHE_NAME = 'haikan-calc-v5';
+const CACHE_NAME = 'haikan-calc-v6';
 const CORE = [
   './','./index.html','./site.js','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png',
-  './cut-length.html','./cut-el.html','./offset.html','./rolling-offset.html','./slope.html','./sgp-weight.html'
+  './cut-length.html','./cut-el.html','./flange-hole-layout.html','./offset.html','./rolling-offset.html','./slope.html','./sgp-weight.html'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));

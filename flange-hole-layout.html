@@ -12,11 +12,15 @@ header{background:#17202a;color:#fff;padding:24px 18px}.wrap{max-width:760px;mar
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{font-size:14px;font-weight:800}input,select,button{width:100%;font-size:17px;padding:13px;border:1px solid #ccd2d8;border-radius:12px;margin-top:6px}
 button{background:var(--blue);color:#fff;border:0;font-weight:900}
+.quick-label{margin:16px 0 6px;font-size:14px;font-weight:800}.quick-buttons{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.quick-buttons button{margin:0;padding:10px 4px;background:#eef5ff;color:#1768cc;border:1px solid #c9dcf7;font-size:15px}
 .result{background:#eef5ff;border-radius:14px;padding:16px;line-height:1.9;margin-top:14px}.big{font-size:26px}
 .note{font-size:13px;color:var(--sub);line-height:1.7}.warn{background:#fff7ea;border:1px solid #ffd9a4;border-radius:12px;padding:12px;color:#7c4700}
 .links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:#eef5ff;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:800;color:#1768cc}
 table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border-bottom:1px solid #e6eaee;padding:8px;text-align:right}th:first-child,td:first-child{text-align:left}
-@media(max-width:620px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
+.diagram{max-width:520px;margin:0 auto}.diagram svg{display:block;width:100%;height:auto;background:#fbfcfe;border:1px solid #e1e6eb;border-radius:16px}
+.diagram-note{text-align:center}.table-scroll{overflow-x:auto}.sub-button{background:#eef5ff;color:#1768cc;border:1px solid #c9dcf7;margin-top:12px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.quick-buttons{grid-template-columns:repeat(3,1fr)}h1{font-size:28px}.big{font-size:22px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"フランジボルト穴割付計算","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="theme-color" content="#17202a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="HAIKAN CALC"><script src="site.js" defer></script>
@@ -55,10 +59,19 @@ table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border-bottom:1p
 <label>ボルト穴数<input id="n" min="2" step="1" type="number" value="8"/></label>
 <label>開始角度 (°)<input id="start" step="0.1" type="number" value="0"/></label>
 </div>
+<p class="quick-label">穴数をすぐ選択</p>
+<div class="quick-buttons" aria-label="穴数のクイック選択">
+<button type="button" data-holes="4">4穴</button><button type="button" data-holes="6">6穴</button><button type="button" data-holes="8">8穴</button><button type="button" data-holes="12">12穴</button><button type="button" data-holes="16">16穴</button><button type="button" data-holes="20">20穴</button>
+</div>
 <button id="calc">割付を計算</button><div class="result" id="res"></div>
 </section>
+<section class="card"><h2>穴位置図</h2>
+<div class="diagram" id="diagram" aria-live="polite"></div>
+<p class="note diagram-note">＋X方向を0°とし、反時計回りに割り付けます。赤い穴が開始位置です。</p>
+</section>
 <section class="card"><h2>穴中心の座標</h2>
-<div id="tbl"></div>
+<div class="table-scroll" id="tbl"></div>
+<button class="sub-button" id="copyCoordinates" type="button">座標をコピー</button>
 </section>
 <section class="card"><h2>計算式</h2>
 <p><b>等分角度 = 360° ÷ 穴数</b></p>
@@ -74,21 +87,49 @@ table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border-bottom:1p
 </main>
 <script>
 const $=id=>document.getElementById(id);
-$('calc').onclick=()=>{
- let pcd=+$('pcd').value,n=Math.floor(+$('n').value),start=+$('start').value;
- if(!(pcd>0&&n>=2&&Number.isFinite(start)))return $('res').textContent='入力値を確認してください';
- let R=pcd/2,a=360/n,ch=2*R*Math.sin(Math.PI/n),arc=Math.PI*pcd/n;
- $('res').innerHTML='<span class="big">隣接穴の弦長 <b>'+ch.toFixed(2)+' mm</b></span><br>円弧ピッチ '+arc.toFixed(2)+' mm<br>等分角度 '+a.toFixed(2)+'°';
- let rows='<table><tr><th>穴No.</th><th>角度</th><th>X mm</th><th>Y mm</th></tr>';
- let max=Math.min(n,24);
- for(let i=0;i<max;i++){
-   let deg=start+i*a,rad=deg*Math.PI/180,x=R*Math.cos(rad),y=R*Math.sin(rad);
-   rows+='<tr><td>'+(i+1)+'</td><td>'+deg.toFixed(2)+'°</td><td>'+x.toFixed(2)+'</td><td>'+y.toFixed(2)+'</td></tr>';
+let coordinateText='';
+const format=value=>Math.abs(value)<0.005?'0.00':value.toFixed(2);
+function drawDiagram(n,start){
+ const size=440,c=size/2,r=154,holeR=Math.max(4,Math.min(10,45/Math.sqrt(n))),step=360/n;
+ let marks='';
+ for(let i=0;i<n;i++){
+   const deg=start+i*step,rad=deg*Math.PI/180,x=c+r*Math.cos(rad),y=c-r*Math.sin(rad);
+   const label=n<=16?'<text x="'+(c+(r+25)*Math.cos(rad)).toFixed(2)+'" y="'+(c-(r+25)*Math.sin(rad)).toFixed(2)+'" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#59636e">'+(i+1)+'</text>':'';
+   marks+='<circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="'+holeR+'" fill="'+(i===0?'#e5484d':'#1677ff')+'"/>'+label;
  }
- rows+='</table>';
- if(n>24) rows+='<p class="note">座標表示は先頭24穴までです。</p>';
- $('tbl').innerHTML=rows;
+ $('diagram').innerHTML='<svg viewBox="0 0 '+size+' '+size+'" role="img" aria-label="ボルト穴の割付図">'+
+ '<line x1="35" y1="220" x2="405" y2="220" stroke="#c7cdd5"/><line x1="220" y1="35" x2="220" y2="405" stroke="#c7cdd5"/>'+
+ '<text x="400" y="211" text-anchor="end" font-size="12" fill="#66707a">＋X 0°</text><text x="228" y="48" font-size="12" fill="#66707a">＋Y 90°</text>'+
+ '<circle cx="220" cy="220" r="'+r+'" fill="none" stroke="#59636e" stroke-width="2" stroke-dasharray="6 5"/>'+
+ '<circle cx="220" cy="220" r="4" fill="#17202a"/>'+marks+'</svg>';
 }
+function calculate(){
+ const pcd=+$('pcd').value,rawN=+$('n').value,start=+$('start').value;
+ if(!(pcd>0&&Number.isInteger(rawN)&&rawN>=2&&rawN<=360&&Number.isFinite(start))){
+   $('res').textContent='PCDは0より大きい数値、穴数は2～360の整数、開始角度は数値で入力してください。';
+   $('tbl').innerHTML='';$('diagram').innerHTML='';coordinateText='';return;
+ }
+ const n=rawN,R=pcd/2,a=360/n,ch=2*R*Math.sin(Math.PI/n),arc=Math.PI*pcd/n,circ=Math.PI*pcd;
+ $('res').innerHTML='<span class="big">隣接穴の弦長 <b>'+ch.toFixed(2)+' mm</b></span><br>円弧ピッチ '+arc.toFixed(2)+' mm<br>等分角度 '+a.toFixed(2)+'°<br>PCD半径 '+R.toFixed(2)+' mm ／ PCD円周 '+circ.toFixed(2)+' mm';
+ let rows='<table><thead><tr><th>穴No.</th><th>角度</th><th>X mm</th><th>Y mm</th></tr></thead><tbody>';
+ const lines=['穴No.,角度,X mm,Y mm'];
+ for(let i=0;i<n;i++){
+   const deg=start+i*a,rad=deg*Math.PI/180,x=R*Math.cos(rad),y=R*Math.sin(rad);
+   rows+='<tr><td>'+(i+1)+'</td><td>'+deg.toFixed(2)+'°</td><td>'+format(x)+'</td><td>'+format(y)+'</td></tr>';
+   lines.push((i+1)+','+deg.toFixed(2)+','+format(x)+','+format(y));
+ }
+ rows+='</tbody></table>';
+ $('tbl').innerHTML=rows;coordinateText='PCD '+pcd+' mm / '+n+'穴 / 開始角度 '+start+'°\n'+lines.join('\n');
+ drawDiagram(n,start);
+}
+$('calc').onclick=calculate;
+document.querySelectorAll('[data-holes]').forEach(button=>button.addEventListener('click',()=>{$('n').value=button.dataset.holes;calculate()}));
+['pcd','n','start'].forEach(id=>$(id).addEventListener('change',calculate));
+$('copyCoordinates').addEventListener('click',async()=>{
+ if(!coordinateText)return;
+ try{await navigator.clipboard.writeText(coordinateText);$('copyCoordinates').textContent='コピーしました';setTimeout(()=>$('copyCoordinates').textContent='座標をコピー',1500)}
+ catch(_){$('copyCoordinates').textContent='コピーできませんでした'}
+});
 $('calc').click();
 </script>
 <section class="field-guide"><h2>現場での確認ポイント</h2><p>穴位置を罫書く時は、フランジの基準方向とボルト穴の振り分けを先に決めてから割付します。相手フランジとの向き、ガスケット、機器ノズルの基準も合わせて確認してください。</p></section><div class="hc-ad-slot" data-ad-slot="content">
