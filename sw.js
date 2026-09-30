@@ -1,4 +1,4 @@
-const CACHE_NAME = 'haikan-calc-v4';
+const CACHE_NAME = 'haikan-calc-v5';
 const CORE = [
   './','./index.html','./site.js','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png',
   './cut-length.html','./cut-el.html','./offset.html','./rolling-offset.html','./slope.html','./sgp-weight.html'
