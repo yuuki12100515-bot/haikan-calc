@@ -1,19 +1,19 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>配管3方向振り・ローリングオフセット計算｜HAIKAN CALC</title><meta name="description" content="Rise・Roll・エルボ角度から3方向の振り・逃げ（ローリングオフセット）の真のオフセット、芯芯実長、引き寸、直管切り寸を無料計算。">
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ローリングオフセット計算｜3方向振り・タスキ振り｜配管CALC</title><meta name="description" content="進みH・高さV・奥行きDから、タスキ振りの真の逃げ、芯芯実長、EL角度、引き寸、直管切り寸を計算。">
 <style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#17202a}.w{max-width:640px;margin:auto}.c{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px #0001}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-weight:700;font-size:14px}input,select,button{width:100%;box-sizing:border-box;font-size:18px;padding:14px;border-radius:12px;border:1px solid #ccd1d5;margin-top:6px}button{background:#1677ff;color:#fff;border:0;font-weight:800;margin-top:18px}.r{margin-top:16px;background:#eef5ff;padding:16px;border-radius:14px;line-height:1.85}.hero{font-size:23px}.n{font-size:13px;color:#586069;margin-top:12px}.hidden{display:none}@media(max-width:480px){.g{grid-template-columns:1fr}}</style><link rel="canonical" href="https://yuuki12100515-bot.github.io/haikan-calc/rolling-offset.html"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="theme-color" content="#17202a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="HAIKAN CALC"><script src="site.js" defer></script>
 <!-- SEO metadata -->
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-<meta property="og:title" content="配管3方向振り・ローリングオフセット計算｜HAIKAN CALC">
-<meta property="og:description" content="Rise・Roll・エルボ角度から3方向の振り・逃げ（ローリングオフセット）の真のオフセット、芯芯実長、引き寸、直管切り寸を無料計算。">
+<meta property="og:title" content="ローリングオフセット計算｜3方向振り・タスキ振り｜配管CALC">
+<meta property="og:description" content="進みH・高さV・奥行きDから、タスキ振りの真の逃げ、芯芯実長、EL角度、引き寸、直管切り寸を計算。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yuuki12100515-bot.github.io/haikan-calc/rolling-offset.html">
 <meta property="og:image" content="https://yuuki12100515-bot.github.io/haikan-calc/icon-512.png">
 <meta property="og:site_name" content="HAIKAN CALC">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="配管3方向振り・ローリングオフセット計算｜HAIKAN CALC">
-<meta name="twitter:description" content="Rise・Roll・エルボ角度から3方向の振り・逃げ（ローリングオフセット）の真のオフセット、芯芯実長、引き寸、直管切り寸を無料計算。">
+<meta name="twitter:title" content="ローリングオフセット計算｜3方向振り・タスキ振り｜配管CALC">
+<meta name="twitter:description" content="進みH・高さV・奥行きDから、タスキ振りの真の逃げ、芯芯実長、EL角度、引き寸、直管切り寸を計算。">
 <meta name="twitter:image" content="https://yuuki12100515-bot.github.io/haikan-calc/icon-512.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"配管3方向振り・ローリングオフセット計算","url":"https://yuuki12100515-bot.github.io/haikan-calc/rolling-offset.html","description":"Rise・Roll・エルボ角度から3方向の振り・逃げ（ローリングオフセット）の真のオフセット、芯芯実長、引き寸、直管切り寸を無料計算。","inLanguage":"ja","isPartOf":{"@type":"WebSite","name":"HAIKAN CALC","url":"https://yuuki12100515-bot.github.io/haikan-calc/"},"applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"配管3方向振り・ローリングオフセット計算","url":"https://yuuki12100515-bot.github.io/haikan-calc/rolling-offset.html","description":"進みH・高さV・奥行きDから、タスキ振りの真の逃げ、芯芯実長、EL角度、引き寸、直管切り寸を計算。","inLanguage":"ja","isPartOf":{"@type":"WebSite","name":"HAIKAN CALC","url":"https://yuuki12100515-bot.github.io/haikan-calc/"},"applicationCategory":"UtilitiesApplication","operatingSystem":"Web","isAccessibleForFree":true}</script>
 </head>
 <body>
 
@@ -92,4 +92,14 @@ q('out').innerHTML='<span class="hero">直管切り寸 <b>'+cut.toFixed(1)+' mm<
 
 
 <section class="card hc-seo-info"><h2>ローリングオフセットの使い方</h2><p>水平・高さ・奥行きの3方向にずれる配管では、平面だけの寸法では実長を決められません。この計算では3成分から配管の実長と角度を確認できます。現場では基準点と各方向の符号を先に決め、入力値が同じ基準から測られていることを確認してください。計算結果は製作前の確認値として使い、継手の実寸や芯寸法は採用規格・メーカー寸法と照合してください。</p></section>
+
+<section class="card">
+<h2>H・V・Dからローリングオフセットを計算する</h2>
+<p><b>H</b>は進み、<b>V</b>は高さ方向のずれ、<b>D</b>は奥行き方向のずれです。高さと奥行きを合成した距離が真の逃げになります。</p>
+<p><b>真の逃げ O = √(V² + D²)</b><br><b>芯芯実長 L = √(H² + V² + D²)</b><br>EL角度を指定する場合は <b>L = O ÷ sin(角度)</b>、進みは <b>H = O ÷ tan(角度)</b> です。</p>
+<h3>45°の計算例</h3>
+<p>H=707.1mm、V=500mm、D=500mmなら、真の逃げは約707.1mm、芯芯実長は1000.0mm、EL角度は45°です。80A・LRの自動引き寸を両端に使い、追加控除0mmなら直管切り寸は約905.3mmです。</p>
+<p>一方向の逃げは <a href="offset.html">配管オフセット計算</a>、カットEL単体は <a href="cut-el.html">カットエルボ計算</a>、直管の控除確認は <a href="cut-length.html">芯々から切り寸</a> を使います。</p>
+<p class="note">3方向それぞれの寸法が同じ基準点から測られていることを確認してください。ELの中心半径、現物寸法、ギャップ、切断・開先条件は図面と採用品で照合してください。</p>
+</section>
 </body></html>

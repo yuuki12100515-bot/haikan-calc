@@ -1,7 +1,7 @@
 <!doctype html><html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>配管の流量・流速計算｜L/min・m3/h対応｜HAIKAN CALC</title>
-<meta name="description" content="配管内径と流量から流速m/sを無料計算。L/minとm3/hに対応し、流速から流量の逆算も可能です。">
+<title>配管流量・流速計算｜Q=A×v・内径からm/s換算｜配管CALC</title>
+<meta name="description" content="配管内径と流量から流速m/sを計算。L/min・m³/hに対応し、流速から流量も逆算できます。圧力損失や必要口径の関連計算も利用できます。">
 <link rel="canonical" href="https://yuuki12100515-bot.github.io/haikan-calc/flow-velocity.html">
 <style>
 :root{--bg:#f4f6f8;--ink:#17202a;--sub:#66707a;--blue:#1677ff}
@@ -20,16 +20,16 @@ button{background:var(--blue);color:#fff;border:0;font-weight:900}
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="theme-color" content="#17202a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="HAIKAN CALC"><script src="site.js" defer></script>
 <!-- SEO metadata -->
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-<meta property="og:title" content="配管の流量・流速計算｜L/min・m3/h対応｜HAIKAN CALC">
-<meta property="og:description" content="配管内径と流量から流速m/sを無料計算。L/minとm3/hに対応し、流速から流量の逆算も可能です。">
+<meta property="og:title" content="配管流量・流速計算｜Q=A×v・内径からm/s換算｜配管CALC">
+<meta property="og:description" content="配管内径と流量から流速m/sを計算。L/min・m³/hに対応し、流速から流量も逆算できます。圧力損失や必要口径の関連計算も利用できます。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yuuki12100515-bot.github.io/haikan-calc/flow-velocity.html">
 <meta property="og:image" content="https://yuuki12100515-bot.github.io/haikan-calc/icon-512.png">
 <meta property="og:site_name" content="HAIKAN CALC">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="配管の流量・流速計算｜L/min・m3/h対応｜HAIKAN CALC">
-<meta name="twitter:description" content="配管内径と流量から流速m/sを無料計算。L/minとm3/hに対応し、流速から流量の逆算も可能です。">
+<meta name="twitter:title" content="配管流量・流速計算｜Q=A×v・内径からm/s換算｜配管CALC">
+<meta name="twitter:description" content="配管内径と流量から流速m/sを計算。L/min・m³/hに対応し、流速から流量も逆算できます。圧力損失や必要口径の関連計算も利用できます。">
 <meta name="twitter:image" content="https://yuuki12100515-bot.github.io/haikan-calc/icon-512.png">
 </head><body>
 
@@ -69,8 +69,8 @@ button{background:var(--blue);color:#fff;border:0;font-weight:900}
 </section>
 
 <section class="card"><h2>計算式</h2>
-<p><b>流速 v = 流量 Q ÷ 断面積 A</b></p>
-<p><b>断面積 A = π × (内径 ÷ 2)²</b></p>
+<p><b>流速 v = 流量 Q ÷ 断面積 A</b>（Qはm³/s、Aはm²）</p>
+<p><b>断面積 A = π × (内径 ÷ 2)²</b>（内径はmに換算）</p>
 <p class="note">このページは単純な流量・流速換算です。圧力損失・粘度・管粗さ・継手損失は含みません。</p>
 </section>
 
@@ -78,9 +78,14 @@ button{background:var(--blue);color:#fff;border:0;font-weight:900}
 <p>内径50mm、流量100L/minなら流速は約<b>0.849m/s</b>です。</p>
 </section>
 
-<section class="card"><h2>関連計算</h2><div class="links"><a href="pipe-volume.html">配管内容積・充水量</a><a href="sgp-weight.html">SGP重量・保有水量</a><a href="slope.html">配管勾配・高低差</a></div></section>
+<section class="card"><h2>関連計算</h2><div class="links"><a href="pipe-volume.html">配管内容積・充水量</a><a href="sgp-weight.html">SGP重量・保有水量</a><a href="slope.html">配管勾配・高低差</a><a href="pipe-diameter.html">流量から配管口径の目安</a><a href="pressure-loss.html">直管の圧力損失</a></div></section>
 
 <section class="card hc-seo-info"><h2>流量と流速を確認するとき</h2><p>流速は流量を配管断面積で割って求めます。同じ流量でも内径が小さくなるほど流速は高くなります。この計算はL/minとm³/hの換算にも対応しているので、ポンプ仕様と現場計測値の単位が違う場合にも使えます。圧力損失を評価するときは、この流速に加えて管長、粗さ、粘度、継手損失も確認してください。</p></section>
+
+<section class="card"><h2>よくある質問</h2>
+<details><summary>配管の内径と呼び径は同じですか？</summary><p>同じではありません。流速計算には実際の管内径を入力してください。呼び径だけから内径を決めず、管種・肉厚・仕様を確認します。</p></details>
+<details><summary>この結果から圧力損失も分かりますか？</summary><p>いいえ。このページは平均流速と流量の換算です。直管の圧力損失は管長・内径・摩擦係数等が必要です。<a href="pressure-loss.html">圧力損失計算</a>で条件を別途入力してください。</p></details>
+<details><summary>水以外の流体にも使えますか？</summary><p>Q=A×vによる体積流量と平均流速の換算です。気体や圧縮性流体では状態・密度の変化を考慮した設計計算が別途必要です。</p></details></section>
 </main>
 <script>
 const $=id=>document.getElementById(id);

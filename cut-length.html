@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC</title>
-<meta name="description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
+<title>配管切り寸計算｜芯々から直管の切り寸を確認｜配管CALC</title>
+<meta name="description" content="配管の芯々寸法から直管の切り寸を計算。BW・SW・ねじ込み・塩ビの継手控除や、左右別の継手、追加調整をスマホで確認できます。">
 <link rel="canonical" href="https://yuuki12100515-bot.github.io/haikan-calc/cut-length.html">
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#17202a;--sub:#66707a;--blue:#1677ff;--green:#08783e}
@@ -27,8 +27,8 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HAIKAN CALC">
-<meta property="og:title" content="芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC">
-<meta property="og:description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
+<meta property="og:title" content="配管切り寸計算｜芯々から直管の切り寸を確認｜配管CALC">
+<meta property="og:description" content="配管の芯々寸法から直管の切り寸を計算。BW・SW・ねじ込み・塩ビの継手控除や、左右別の継手、追加調整をスマホで確認できます。">
 <meta property="og:url" content="https://yuuki12100515-bot.github.io/haikan-calc/cut-length.html">
 <meta name="twitter:card" content="summary">
 
@@ -59,8 +59,8 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 <!-- SEO metadata -->
 <meta property="og:image" content="https://yuuki12100515-bot.github.io/haikan-calc/icon-512.png">
 <meta property="og:locale" content="ja_JP">
-<meta name="twitter:title" content="芯々から切り寸｜BW・SW・ねじ・塩ビ対応｜HAIKAN CALC">
-<meta name="twitter:description" content="配管の芯々寸法から直管の切り寸を無料計算。BW溶接、SW、ねじ込み、TS・HI-TS・DV・VU-DV・HTの主要継手に対応。">
+<meta name="twitter:title" content="配管切り寸計算｜芯々から直管の切り寸を確認｜配管CALC">
+<meta name="twitter:description" content="配管の芯々寸法から直管の切り寸を計算。BW・SW・ねじ込み・塩ビの継手控除や、左右別の継手、追加調整をスマホで確認できます。">
 <meta name="twitter:image" content="https://yuuki12100515-bot.github.io/haikan-calc/icon-512.png">
 </head>
 <body>
@@ -115,8 +115,8 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 <label>種類<select id="leftType"></select></label>
 <label id="leftBranchWrap" class="hidden">枝口径<select id="leftBranch"></select></label>
 <label id="leftPosWrap" class="hidden">使う側<select id="leftPos"><option value="run1">直進側①</option><option value="run2">直進側②</option><option value="branch">枝側</option></select></label>
-<label>中心→端面/底面 A (mm)<input id="leftA" type="number" step="0.1"></label>
-<label>差込み・ねじ込み B (mm)<input id="leftB" type="number" step="0.1"></label>
+<label>中心→接続基準点 A (mm)<input id="leftA" type="number" step="0.1"></label>
+<label>戻し・差込み量 B (mm)<input id="leftB" type="number" step="0.1"></label>
 <div id="leftStatus" class="note"></div>
 </div>
 <div class="side">
@@ -124,8 +124,8 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 <label>種類<select id="rightType"></select></label>
 <label id="rightBranchWrap" class="hidden">枝口径<select id="rightBranch"></select></label>
 <label id="rightPosWrap" class="hidden">使う側<select id="rightPos"><option value="run1">直進側①</option><option value="run2">直進側②</option><option value="branch">枝側</option></select></label>
-<label>中心→端面/底面 A (mm)<input id="rightA" type="number" step="0.1"></label>
-<label>差込み・ねじ込み B (mm)<input id="rightB" type="number" step="0.1"></label>
+<label>中心→接続基準点 A (mm)<input id="rightA" type="number" step="0.1"></label>
+<label>戻し・差込み量 B (mm)<input id="rightB" type="number" step="0.1"></label>
 <div id="rightStatus" class="note"></div>
 </div>
 </div>
@@ -144,7 +144,7 @@ details{border-top:1px solid #e3e7eb;padding:12px 0}summary{font-weight:800}
 
 <section class="card">
 <h2>使い方</h2>
-<p>芯々寸法を入力し、左右の配管方式と継手を選びます。差込み式・ねじ込み・塩ビは、中心から底面までの寸法と差込み量から実効控除を求めます。</p>
+<p>芯々寸法を入力し、左右の配管方式と継手を選びます。継手ごとの実効控除を使います。SWはG/H（中心から差込み底面まで）を直接控除し、ギャップなどの調整寸法は追加欄に分けて入力します。</p>
 <p><b>切り寸 = 芯々 − 左実効控除 − 右実効控除 − 追加控除</b></p>
 </section>
 
@@ -205,8 +205,8 @@ function setSide(side){
  }
  if(method==='sw'){
    let d=sw[n],sch=+$('schedule').value;
-   if(d&&(type==='90EL'||type==='TEE'||type==='CROSS')){A.value=d.g90[sch];B.value=d.C;st.textContent='自動：SW G−C';return}
-   if(d&&type==='45EL'){A.value=d.g45[sch];B.value=d.C;st.textContent='自動：SW G45−C';return}
+   if(d&&(type==='90EL'||type==='TEE'||type==='CROSS')){A.value=d.g90[sch];B.value=0;st.textContent='自動：SW G/H（中心→差込み底面）';return}
+   if(d&&type==='45EL'){A.value=d.g45[sch];B.value=0;st.textContent='自動：SW G/H（中心→差込み底面）';return}
    return manual(side,'未登録：A/Bを手入力')
  }
  if(method==='thread'){
@@ -261,7 +261,7 @@ refresh();$('go').click();
 <h3 style="font-size:17px">BW・SW・ねじ・塩ビで何が違う？</h3>
 <ul>
 <li><b>BW</b>：中心から端面までの寸法を控除</li>
-<li><b>SW</b>：中心から底面までの寸法から差込み深さを戻す</li>
+<li><b>SW</b>：G/H（中心→差込み底面）を直接控除。ギャップ等は追加欄で調整</li>
 <li><b>ねじ込み</b>：管端から継手中心までの実効寸法を使用</li>
 <li><b>塩ビ</b>：受口寸法・差込み寸法を考慮</li>
 </ul>
